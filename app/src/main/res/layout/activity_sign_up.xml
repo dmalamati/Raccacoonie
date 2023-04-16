@@ -114,7 +114,6 @@
             android:layout_marginStart="34dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="35dp"
-            android:button="@drawable/check_box"
             android:fontFamily="@font/tienne"
             android:text="I AGREE WITH CHEF RACCACOONIE’S  TERMS AND CONDITIONS"
             android:textStyle="bold"
