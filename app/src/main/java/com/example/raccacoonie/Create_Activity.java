@@ -5,14 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 
 public class Create_Activity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
+
+        String[] countries = getResources().getStringArray(R.array.countries);
+        AutoCompleteTextView country = findViewById(R.id.autoCompleteTextView_country);
+        ArrayAdapter<String> country_adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,countries);
+        country.setAdapter(country_adapter);
 
         ImageButton home_button= findViewById(R.id.home_button);
         home_button.setOnClickListener(new View.OnClickListener() {
@@ -58,5 +67,6 @@ public class Create_Activity extends AppCompatActivity {
                 startActivity(loadProfileActivity);
             }
         });
+
     }
 }

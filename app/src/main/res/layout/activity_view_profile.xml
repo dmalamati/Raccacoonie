@@ -93,7 +93,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/back_button"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/like_icon" />
+                app:srcCompat="@drawable/like_inactive_icon" />
 
             <ImageButton
                 android:id="@+id/save_button"
@@ -107,7 +107,7 @@
                 app:layout_constraintStart_toEndOf="@+id/like_button"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.461"
-                app:srcCompat="@drawable/save_icon" />
+                app:srcCompat="@drawable/save_inactive_icon" />
 
             <ImageButton
                 android:id="@+id/dislike_button"
@@ -121,7 +121,7 @@
                 app:layout_constraintStart_toEndOf="@+id/save_button"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.538"
-                app:srcCompat="@drawable/dislike_icon" />
+                app:srcCompat="@drawable/dislike_inactive_icon" />
 
             <ImageButton
                 android:id="@+id/view_profile_button"
