@@ -15,6 +15,7 @@ public class Log_In_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         Button log_in_button = findViewById(R.id.button_log_in);
+        log_in_button.setEnabled(false);
         log_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
