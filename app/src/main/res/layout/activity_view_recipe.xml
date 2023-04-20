@@ -113,7 +113,7 @@
                 android:id="@+id/dislike_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
                 android:contentDescription="saved"
@@ -127,7 +127,7 @@
                 android:id="@+id/view_profile_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
+                android:layout_marginStart="15dp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
                 android:contentDescription="view_profile"
@@ -154,7 +154,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/ImageView_recipe_image"
+                android:id="@+id/imageView_recipe_image"
                 android:layout_width="420dp"
                 android:layout_height="284dp"
                 android:layout_marginTop="40dp"
@@ -166,14 +166,14 @@
                 app:srcCompat="@drawable/recipe_image" />
 
             <ImageView
-                android:id="@+id/imageView12"
+                android:id="@+id/imageView_blue_rectangle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="240dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.871"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ImageView_recipe_image"
+                app:layout_constraintTop_toTopOf="@+id/imageView_recipe_image"
                 app:srcCompat="@drawable/dislike_like_pane" />
 
             <TextView
@@ -208,16 +208,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ImageView_recipe_image" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView_recipe_image" />
 
             <ImageView
                 android:id="@+id/imageView_small_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="243dp"
-                app:layout_constraintStart_toStartOf="@+id/imageView12"
-                app:layout_constraintTop_toTopOf="@+id/ImageView_recipe_image"
+                android:layout_marginTop="3dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView_blue_rectangle"
+                app:layout_constraintTop_toTopOf="@+id/imageView_blue_rectangle"
                 app:srcCompat="@drawable/like_small_icon" />
 
             <TextView
@@ -225,21 +225,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="246dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/tienne"
                 android:text="100m"
                 android:textColor="#000000"
                 app:layout_constraintStart_toEndOf="@+id/imageView_small_like"
-                app:layout_constraintTop_toTopOf="@+id/ImageView_recipe_image" />
+                app:layout_constraintTop_toTopOf="@+id/imageView_blue_rectangle" />
 
             <ImageView
-                android:id="@+id/imageView14"
+                android:id="@+id/imageView_small_dislike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="243dp"
-                app:layout_constraintStart_toEndOf="@+id/textView_like_number"
-                app:layout_constraintTop_toTopOf="@+id/ImageView_recipe_image"
+                android:layout_marginStart="82dp"
+                android:layout_marginTop="3dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView_blue_rectangle"
+                app:layout_constraintTop_toTopOf="@+id/imageView_blue_rectangle"
                 app:srcCompat="@drawable/dislike_small_icon" />
 
             <TextView
@@ -247,12 +247,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="246dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/tienne"
-                android:text="9999"
+                android:text="100m"
                 android:textColor="#000000"
-                app:layout_constraintStart_toEndOf="@+id/imageView14"
-                app:layout_constraintTop_toTopOf="@+id/ImageView_recipe_image" />
+                app:layout_constraintStart_toEndOf="@+id/imageView_small_dislike"
+                app:layout_constraintTop_toTopOf="@+id/imageView_blue_rectangle" />
 
             <ImageView
                 android:id="@+id/imageView15"
