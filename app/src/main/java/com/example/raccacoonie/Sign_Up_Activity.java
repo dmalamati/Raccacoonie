@@ -20,10 +20,15 @@ public class Sign_Up_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         //UI ELEMENTS
         Button actual_sign_up = findViewById(R.id.button_actual_sign_up);
         CheckBox terms_and_conditions = findViewById(R.id.checkBox);
         TextView email = findViewById(R.id.editTextEmail);
+
+        //DB FOR TESTS (AND USER HANDLING)
+        DatabaseHandler MyHandler = new DatabaseHandler(this,1);
+
 
         actual_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,6 +38,7 @@ public class Sign_Up_Activity extends AppCompatActivity {
                 {
                    //TODO: 1: check if The fields are correct in terms of database
                     // TODO:kill this activity so it cant be accesed by pressing the 'back button'
+                    Toast.makeText(Sign_Up_Activity.this, MyHandler.getUsers(), Toast.LENGTH_LONG).show();
                     startActivity(loadHomeActivity);
                 }
                 else
