@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 public class Sign_Up_Activity extends AppCompatActivity {
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +28,12 @@ public class Sign_Up_Activity extends AppCompatActivity {
         //UI ELEMENTS
         Button actual_sign_up = findViewById(R.id.button_actual_sign_up);
         CheckBox terms_and_conditions = findViewById(R.id.checkBox);
-        TextView email = findViewById(R.id.editTextEmail);
+
+        EditText username= findViewById(R.id.editTextUsername2);
+        EditText password=findViewById(R.id.editTextPassword2);
+        EditText email=findViewById(R.id.editTextEmail);
+
+
 
         //DB FOR TESTS (AND USER HANDLING)
         DatabaseHandler MyHandler = new DatabaseHandler(this,1);
@@ -33,11 +42,17 @@ public class Sign_Up_Activity extends AppCompatActivity {
         actual_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String user=username.getText().toString();
+                String pass=password.getText().toString();
+                String mail=email.getText().toString();
+
                 Intent loadHomeActivity= new Intent(Sign_Up_Activity.this,Home_Activity.class);
                 if (terms_and_conditions.isChecked())
                 {
                    //TODO: 1: check if The fields are correct in terms of database
                     // TODO:kill this activity so it cant be accesed by pressing the 'back button'
+                    User u=new User(user,pass,mail);
+                    MyHandler.addUser(u);
                     Toast.makeText(Sign_Up_Activity.this, MyHandler.getUsers(), Toast.LENGTH_LONG).show();
                     startActivity(loadHomeActivity);
                 }

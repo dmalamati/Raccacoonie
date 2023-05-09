@@ -79,6 +79,30 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
 
     }
+    /*public boolean checkUsername(String username)
+    { return true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM USER WHERE username = ?",new String[] {username});
+        if(cursor.getCount()>=1) {
+            return true;
+        } else {
+            return  false;
+        }*/
+
+    public String  checkPassword(String username,String password)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //String query =String.format("SELECT * FROM USER WHERE username = ? AND password = ?", username,password);
+        //Cursor cursor = db.rawQuery(query,null);
+        /*if(cursor.getCount()>=1)
+        {
+            return true;
+        }
+        else {
+            return false ;
+        }*/
+        return "KATI";
+    }
 
     public String getUsers()
     {
@@ -88,6 +112,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         //return new String(String.valueOf(cursor.getCount()));
         return String.join(",",cursor.getColumnNames());
+    }
+    public void  addUser(User u)
+    {
+        SQLiteDatabase db= this.getWritableDatabase();
+        ContentValues userValues= new ContentValues();
+        userValues.put("username",u.getUsername());
+        userValues.put("email",u.getEmail());
+        userValues.put("password",u.getPassword());
+        db.insert("USER",null,userValues);
+        db.close();
+
     }
 
     public int addRecipe(Recipe r) //todo:add a user
