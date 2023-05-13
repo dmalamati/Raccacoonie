@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +32,9 @@ public class Create_Activity extends AppCompatActivity {
         Button share_recipe_button = findViewById(R.id.button_share);
         ImageButton search_button= findViewById(R.id.search_button);
         ImageButton home_button= findViewById(R.id.home_button);
-        TextView recipe_title = findViewById(R.id.editText_recipe_title);
-        TextView ingredients = findViewById(R.id.editText_recipe_ingredients);
-        TextView execution = findViewById(R.id.editText_recipe_execution);
+        EditText recipe_title = findViewById(R.id.editText_recipe_title);
+        EditText ingredients = findViewById(R.id.editText_recipe_ingredients);
+        EditText execution = findViewById(R.id.editText_recipe_execution);
 
         DatabaseHandler myHandler = new DatabaseHandler(this,1);
 
@@ -89,6 +91,7 @@ public class Create_Activity extends AppCompatActivity {
                 if (ingredients.getText().length() == 0 || recipe_title.getText().length()==0|| execution.getText().length()==0)
                 {
                     Toast.makeText(Create_Activity.this, "Please add all the necessary fields before sharing", Toast.LENGTH_SHORT).show();
+                    Log.d("TEST",myHandler.getRecipe(2));
 
                 }else
                 {
@@ -110,6 +113,7 @@ public class Create_Activity extends AppCompatActivity {
 
         handler.addRecipe(r);
         Toast.makeText(this, String.valueOf(handler.recipe_count()), Toast.LENGTH_SHORT).show();
+
         //TODO: check if user has submitted a recipe with the same title.
 
     }

@@ -27,6 +27,13 @@ public class Recipe {
 
         this.id = -1; // if not set by the database, id is -1
     }
+    @Override
+    public String toString()
+    {
+
+       String out = String.format("%s %nCreator:%s %nExecution:%s %n",this.title,this.creator_id,this.execution);
+        return out;
+    }
 
     public int getCreator_id() {
         return creator_id;

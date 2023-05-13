@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -89,19 +90,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             return  false;
         }*/
 
-    public String  checkPassword(String username,String password)
+    public boolean  checkPassword(String user,String pass)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        //String query =String.format("SELECT * FROM USER WHERE username = ? AND password = ?", username,password);
-        //Cursor cursor = db.rawQuery(query,null);
-        /*if(cursor.getCount()>=1)
+        String query = "SELECT * FROM USER WHERE username = ? AND password = ?";
+        String[] selectionArgs = {user, pass};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        //Cursor cursor = db.rawQuery("SELECT * FROM USER",null);
+
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    String columnName = cursor.getColumnName(i);
+                    String columnValue = cursor.getString(i);
+                    sb.append(columnName).append(": ").append(columnValue).append(", ");
+                }
+                Log.d("USERS", sb.toString());
+            } while (cursor.moveToNext());
+        }//PRINT OUTPUT TO LOGFILE
+
+
+        if(cursor.getCount()>=1)
         {
+            cursor.close();
             return true;
         }
-        else {
-            return false ;
-        }*/
-        return "KATI";
+        cursor.close();
+        return false ;
     }
 
     public String getUsers()
@@ -149,6 +167,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM RECIPE",null);
         return cursor.getCount();
+    }
+
+    public String getRecipe(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = String.format("SELECT * FROM RECIPE");
+        Cursor cursor =  db.rawQuery(query,null);
+        if (cursor.getCount()>0)
+        {
+            while (cursor.moveToNext()) {
+
+                for (int i = 0 ; i < cursor.getCount();i++)
+                    Log.d("TEST",String.format(cursor.getColumnName(i)+" : " +cursor.getString(i)));
+            }
+            for (int i = 0 ; i < cursor.getColumnCount();i++)
+            {
+                Log.d("debug",cursor.getColumnNames()[i]);
+            }
+        }
+        return "nope";
     }
 
 
