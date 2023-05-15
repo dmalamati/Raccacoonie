@@ -46,16 +46,22 @@ public class Sign_Up_Activity extends AppCompatActivity {
                 String pass=password.getText().toString();
                 String mail=email.getText().toString();
 
-                Intent loadHomeActivity= new Intent(Sign_Up_Activity.this,Home_Activity.class);
+                Intent loadLog_In_Activity= new Intent(Sign_Up_Activity.this,Log_In_Activity.class);
                 if (terms_and_conditions.isChecked())
                 {
                    //TODO: 1: check if The fields are correct in terms of database
                     // TODO:kill this activity so it cant be accesed by pressing the 'back button'
+                    if(MyHandler.checkEmail(mail)){
+                        Toast.makeText(Sign_Up_Activity.this, "Email already used in another account", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
                     User u=new User(user,pass,mail);
                     MyHandler.addUser(u);
                     Toast.makeText(Sign_Up_Activity.this, MyHandler.getUsers(), Toast.LENGTH_LONG).show();
-                    startActivity(loadHomeActivity);
-                }
+                    startActivity(loadLog_In_Activity);
+                    finish();
+
+                }}
                 else
                 {
                     Toast.makeText(Sign_Up_Activity.this, "You need to accept terms and conditions first", Toast.LENGTH_SHORT).show(); //this never runs

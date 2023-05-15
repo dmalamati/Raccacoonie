@@ -91,7 +91,7 @@ public class Create_Activity extends AppCompatActivity {
                 if (ingredients.getText().length() == 0 || recipe_title.getText().length()==0|| execution.getText().length()==0)
                 {
                     Toast.makeText(Create_Activity.this, "Please add all the necessary fields before sharing", Toast.LENGTH_SHORT).show();
-                    Log.d("TEST",myHandler.getRecipe(2));
+                    //Log.d("TEST",myHandler.getRecipe(2));
 
                 }else
                 {
