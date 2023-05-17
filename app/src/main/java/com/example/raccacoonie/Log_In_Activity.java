@@ -38,9 +38,10 @@ public class Log_In_Activity extends AppCompatActivity {
                 {
                   //  Intent loadHomeActivity= new Intent(Log_In_Activity.this,Home_Activity.class);
                     //startActivity(loadHomeActivity);
-                    Toast.makeText(Log_In_Activity.this, "BRAVO ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Log_In_Activity.this, "Hello "+user, Toast.LENGTH_SHORT).show();
                    Intent loadHomeActivity= new Intent(Log_In_Activity.this,Home_Activity.class);
-                    startActivity(loadHomeActivity);
+                   loadHomeActivity.putExtra("user",user);
+                   startActivity(loadHomeActivity);
 
 
 

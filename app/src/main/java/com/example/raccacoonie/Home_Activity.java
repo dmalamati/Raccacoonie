@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class Home_Activity extends AppCompatActivity {
 
@@ -15,7 +16,13 @@ public class Home_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        Intent in=getIntent();
+        Bundle b=in.getExtras();
+        if(b!=null)
+        {
+            String user=(String) b.get("user");
+            Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
+        }
         ImageButton home_button= findViewById(R.id.home_button);
         home_button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -196,6 +196,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
 
+
 /*"CREATE TABLE RECIPE (\n" +
                         "    _id          INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                         "    title       TEXT    NOT NULL,\n" +
