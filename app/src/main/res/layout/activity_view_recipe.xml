@@ -32,9 +32,10 @@
 
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/logo" />
@@ -141,7 +142,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="599dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -155,9 +156,8 @@
 
             <ImageView
                 android:id="@+id/imageView_recipe_image"
-                android:layout_width="420dp"
+                android:layout_width="0dp"
                 android:layout_height="284dp"
-                android:layout_marginTop="40dp"
                 android:background="#D8D8D8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.555"
@@ -169,20 +169,19 @@
                 android:id="@+id/imageView_blue_rectangle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="240dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView_recipe_image"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.871"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView_recipe_image"
                 app:srcCompat="@drawable/dislike_like_pane" />
 
             <TextView
                 android:id="@+id/textView_description"
-                android:layout_width="344dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="34dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/tienne"
                 android:text="Description"
                 android:textColor="#73816F"
@@ -195,11 +194,11 @@
 
             <TextView
                 android:id="@+id/textView_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="28dp"
-                android:layout_marginEnd="313dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/tienne"
                 android:text="Title"
                 android:textColor="#73816F"
@@ -258,21 +257,25 @@
                 android:id="@+id/imageView15"
                 android:layout_width="25dp"
                 android:layout_height="27dp"
-                android:layout_marginStart="34dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/textView_profile_username"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_title"
                 app:srcCompat="@drawable/profile_color_icon" />
 
             <TextView
                 android:id="@+id/textView_profile_username"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/tienne"
                 android:text="\@username"
                 android:textColor="#73806F"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView15"
                 app:layout_constraintTop_toBottomOf="@+id/textView_title" />
 

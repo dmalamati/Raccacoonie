@@ -1,18 +1,34 @@
 package com.example.raccacoonie;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-public class Profile_Activity extends AppCompatActivity {
+public class Profile_Activity extends AppCompatActivity implements RecyclerViewInterface {
+
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        recyclerView = findViewById(R.id.recyclerView_my_recipes);
+//Set the layout of the items in the RecyclerView
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+//Set my Adapter for the RecyclerView
+        adapter = new RecyclerAdapter(this);
+        recyclerView.setAdapter(adapter);
+
 
         ImageButton home_button= findViewById(R.id.home_button);
         home_button.setOnClickListener(new View.OnClickListener() {
@@ -58,5 +74,12 @@ public class Profile_Activity extends AppCompatActivity {
                 startActivity(loadProfileActivity);
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        // something to delete recipes
+        Intent loadViewRecipeActivity= new Intent(Profile_Activity.this,View_Recipe_Activity.class);
+        startActivity(loadViewRecipeActivity);
     }
 }

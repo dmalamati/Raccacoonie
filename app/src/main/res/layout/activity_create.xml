@@ -152,11 +152,11 @@
 
             <TextView
                 android:id="@+id/textView_recipe_execution"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="166dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/tienne"
                 android:text="Now spill the tea:"
                 android:textColor="#73816F"
@@ -168,11 +168,11 @@
 
             <TextView
                 android:id="@+id/textView_recipe_ingredients"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="116dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/tienne"
                 android:text="List your ingredients:"
                 android:textColor="#73816F"
@@ -184,11 +184,11 @@
 
             <EditText
                 android:id="@+id/editText_recipe_title"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="31dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/round_corner_green"
                 android:elevation="10dp"
                 android:ems="10"
@@ -202,11 +202,11 @@
 
             <TextView
                 android:id="@+id/textView_recipe_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="77dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/tienne"
                 android:text="Give your recipe a name:"
                 android:textColor="#73816F"
@@ -218,9 +218,9 @@
 
             <ImageView
                 android:id="@+id/imageView11"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
+                android:layout_marginStart="23dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="23dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -230,11 +230,11 @@
 
             <EditText
                 android:id="@+id/editText_recipe_ingredients"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="300dp"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/round_corner_green"
                 android:elevation="10dp"
                 android:ems="10"
@@ -245,16 +245,17 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView_recipe_ingredients" />
 
             <EditText
                 android:id="@+id/editText_recipe_execution"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="350dp"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/round_corner_green"
                 android:elevation="10dp"
                 android:ems="10"
@@ -270,11 +271,11 @@
 
             <TextView
                 android:id="@+id/textView_recipe_tags"
-                android:layout_width="339dp"
+                android:layout_width="0dp"
                 android:layout_height="71dp"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="39dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/tienne"
                 android:text="Help others discover your recipe by adding:"
                 android:textColor="#73816F"
@@ -286,11 +287,11 @@
 
             <Spinner
                 android:id="@+id/spinner_category"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="30dp"
                 android:entries="@array/category"
                 android:fontFamily="@font/tienne"
                 android:paddingHorizontal="20dp"
@@ -301,11 +302,11 @@
 
             <Spinner
                 android:id="@+id/spinner_tag"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="30dp"
                 android:entries="@array/tag"
                 android:fontFamily="@font/tienne"
                 android:paddingHorizontal="20dp"
@@ -316,11 +317,11 @@
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView_country"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/round_corner_green"
                 android:elevation="10dp"
                 android:fontFamily="@font/tienne"
@@ -333,11 +334,11 @@
 
             <TextView
                 android:id="@+id/textView_add_photo"
-                android:layout_width="339dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="33dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="39dp"
+                android:layout_marginEnd="30dp"
                 android:fontFamily="@font/tienne"
                 android:text="Consider adding a photo:"
                 android:textColor="#73816F"
@@ -349,10 +350,10 @@
 
             <ImageButton
                 android:id="@+id/imageButton_add_photo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="115dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="115dp"
                 android:backgroundTint="#00FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -362,12 +363,12 @@
 
             <Button
                 android:id="@+id/button_share"
-                android:layout_width="222dp"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="94dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="95dp"
-                android:layout_marginBottom="60dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="90dp"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/round_corner_red"
                 android:fontFamily="@font/tienne"
                 android:text="Share"
@@ -376,6 +377,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageButton_add_photo" />
 

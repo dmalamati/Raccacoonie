@@ -10,10 +10,10 @@
         android:id="@+id/button_filters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
-        android:elevation="10dp"
         android:background="#00FFFFFF"
+        android:elevation="10dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/filter_icon" />
@@ -162,18 +162,31 @@
 
             <SearchView
                 android:id="@+id/search_view"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/round_corner_green"
-                android:fontFamily="@font/tienne"
                 android:elevation="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:fontFamily="@font/tienne"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_search_recipes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_view" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

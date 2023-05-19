@@ -1,6 +1,8 @@
 package com.example.raccacoonie;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -16,12 +18,25 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class Search_Activity extends AppCompatActivity {
+public class Search_Activity extends AppCompatActivity implements RecyclerViewInterface{
+
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+
+        recyclerView = findViewById(R.id.recyclerView_search_recipes);
+//Set the layout of the items in the RecyclerView
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+//Set my Adapter for the RecyclerView
+        adapter = new RecyclerAdapter(this);
+        recyclerView.setAdapter(adapter);
 
         ImageButton filters_button= findViewById(R.id.button_filters);
         filters_button.setOnClickListener(new View.OnClickListener() {
@@ -96,5 +111,11 @@ public class Search_Activity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent loadViewRecipeActivity= new Intent(Search_Activity.this,View_Recipe_Activity.class);
+        startActivity(loadViewRecipeActivity);
     }
 }

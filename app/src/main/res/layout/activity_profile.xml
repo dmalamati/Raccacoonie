@@ -150,11 +150,11 @@
 
             <ImageView
                 android:id="@+id/imageView8"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="26dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginEnd="27dp"
+                android:layout_marginEnd="26dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -162,11 +162,11 @@
 
             <ImageView
                 android:id="@+id/profile_icon"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="131dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="130dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="131dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView8"
@@ -174,7 +174,7 @@
 
             <TextView
                 android:id="@+id/textView_View_Username"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="4dp"
@@ -190,11 +190,11 @@
 
             <EditText
                 android:id="@+id/editText_username_edit"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="31dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/round_corner_green"
                 android:elevation="10dp"
                 android:ems="10"
@@ -208,7 +208,7 @@
 
             <TextView
                 android:id="@+id/textView_View_Email"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
@@ -224,11 +224,11 @@
 
             <EditText
                 android:id="@+id/editText_email_edit"
-                android:layout_width="350dp"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="31dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/round_corner_green"
                 android:elevation="10dp"
                 android:ems="10"
@@ -258,17 +258,32 @@
 
             <TextView
                 android:id="@+id/textView_shared"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="160dp"
                 android:fontFamily="@font/tienne"
                 android:text="shared recipes:"
                 android:textColor="#73816F"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView_view_number_of_posts"
                 app:layout_constraintTop_toBottomOf="@+id/editText_email_edit" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_my_recipes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView_shared" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
