@@ -25,7 +25,7 @@ public class Saved_Activity extends AppCompatActivity implements RecyclerViewInt
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 //Set my Adapter for the RecyclerView
-        adapter = new RecyclerAdapter(this);
+        adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
 
 

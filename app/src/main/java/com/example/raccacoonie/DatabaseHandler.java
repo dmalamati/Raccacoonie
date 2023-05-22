@@ -62,6 +62,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 ");\n");
         db.execSQL("INSERT INTO USER VALUES('pavlidvg.csd.auth.gr','pavlidvg','testpass123',1)");
         db.execSQL("INSERT INTO USER VALUES('dmalamati.csd.auth.gr','dmalamati','test123',2)");
+
+        db.execSQL("INSERT INTO RECIPE (title, dietaryStatus, picture, execution, ingredients, creator_id, category)\n" +
+                "VALUES ('Spaghetti Bolognese', 1, 'spaghetti.jpg', 'Cook spaghetti, prepare Bolognese sauce, and mix together.', 'Spaghetti, ground beef, tomatoes, onions, garlic, herbs', 1, 'Italian');");
+        db.execSQL("INSERT INTO RECIPE (title, dietaryStatus, picture, execution, ingredients, creator_id, category)\n" +
+                "VALUES ('Chicken Stir-Fry', 0, 'stirfry.jpg', 'Heat oil in a pan, add chicken and vegetables, stir-fry until cooked.', 'Chicken breast, bell peppers, broccoli, carrots, soy sauce, ginger', 2, 'Asian');");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -83,11 +88,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public boolean  checkPassword(String user,String pass)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM USER WHERE username = ? AND password = ?";
-        String[] selectionArgs = {user, pass};
+        //String query = "SELECT * FROM USER WHERE username = ? AND password = ?";
+        //String[] selectionArgs = {user, pass};
 
-        Cursor cursor = db.rawQuery(query, selectionArgs);
-        //Cursor cursor = db.rawQuery("SELECT * FROM USER",null);
+        //Cursor cursor = db.rawQuery(query, selectionArgs);
+        Cursor cursor = db.rawQuery("SELECT * FROM USER",null);
+        for (int i = 0 ; i < 20; i++)
+        {
+            Log.d("cursos count",String.valueOf(cursor.getCount()));
+        }
+
 
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -117,6 +127,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String query = "SELECT * FROM USER WHERE email = ?";
         String[] selectionArgs = {mail};
         Cursor cursor = db.rawQuery(query, selectionArgs);
+
         if (cursor.getCount()>=1)
         {
             cursor.close();
@@ -131,6 +142,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
 
+    }
+    public User getUserById(int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM USER WHERE _id = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if (cursor.getCount() > 0)
+        {
+            //todo:build this so it returns the correct user
+        }
+        return null;
+    }
+    //todo: build this
+    public boolean userExists(int id)
+    {
+        return true;
     }
 
     public String getUsers()
@@ -191,6 +221,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
         }
         return "nope";
+    }
+
+    public void printTable(String table_name)
+    {
+        Log.d("USERS","-----");
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s",table_name),null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    String columnName = cursor.getColumnName(i);
+                    String columnValue = cursor.getString(i);
+                    sb.append(columnName).append(": ").append(columnValue).append(", ");
+                }
+                Log.d("USERS", sb.toString());
+            } while (cursor.moveToNext());}
+        Log.d("USERS","-----");
+    }
+
+    public  Cursor getRecipes(int count)
+    {
+        Cursor cursor;
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (count==-1)
+        {
+             cursor = db.rawQuery("SELECT * FROM RECIPE",null);
+        }else
+        {
+            String query = String.format("SELECT * FROM RECIPE LIMIT %S",count);
+             cursor = db.rawQuery(query,null);
+        }
+        return cursor;
     }
 
 

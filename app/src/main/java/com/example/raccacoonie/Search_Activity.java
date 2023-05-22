@@ -35,7 +35,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 //Set my Adapter for the RecyclerView
-        adapter = new RecyclerAdapter(this);
+        adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
 
         ImageButton filters_button= findViewById(R.id.button_filters);

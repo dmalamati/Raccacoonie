@@ -24,7 +24,7 @@ public class View_Profile_Activity extends AppCompatActivity implements Recycler
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 //Set my Adapter for the RecyclerView
-        adapter = new RecyclerAdapter(this);
+        adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
     }
 

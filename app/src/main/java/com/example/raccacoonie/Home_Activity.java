@@ -35,7 +35,7 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 //Set my Adapter for the RecyclerView
-        adapter = new RecyclerAdapter(this);
+        adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
 
 
