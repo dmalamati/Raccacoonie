@@ -2,8 +2,10 @@ package com.example.raccacoonie;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,11 +103,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             itemTitle = itemView.findViewById(R.id.item_title);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
+                    //card position
 
                     int position = getAdapterPosition();
-                    Log.d("DEBUG",String.format("CLICKED CARD %s",position));
-                    // Snackbar.make(v, "Click detected on item " + position,
-                        //    Snackbar.LENGTH_LONG).show();
+                    Log.d("DEBUG","Got adapter pos");
+                    Intent intent = new Intent(v.getContext(), View_Recipe_Activity.class);
+                    Log.d("DEBUG","LOADED INTENT");
+                    //get binding adapter where all the cards are
+                    RecyclerView.Adapter adapter = (RecyclerAdapter)getBindingAdapter();
+                    Log.d("DEBUG","Got binding adapter");
+
+                    Bundle data = new Bundle();
+                    //FILL RECIPE DATA ON BUNDLE TO GIVE TO THE ACTIVITY
+                    data.putString("Rec_title",((RecyclerAdapter) adapter).recipes.get(position).title);
+                    data.putString("Recipe_execution",((RecyclerAdapter) adapter).recipes.get(position).getExecution());
+                    data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[position]);
+
+
+                    intent.putExtras(data);
+
+
+                    //start activity
+                    v.getContext().startActivity(intent);
+
+
                     if( recyclerViewInterface!=null){
                         //int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
@@ -130,6 +151,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 .inflate(R.layout.card_layout, parent, false);
 
         return new ViewHolder(v, recyclerViewInterface);
+    }
+    public Recipe getRecipefromPosition(int pos)
+    {
+        return this.recipes.get(pos);
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {

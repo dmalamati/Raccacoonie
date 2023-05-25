@@ -91,7 +91,12 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
     // LISTENER FOR ITEMS ON RECYCLERVIEW
     @Override
     public void onItemClick(int position) {
-        Intent loadViewRecipeActivity= new Intent(Home_Activity.this,View_Recipe_Activity.class);
-        startActivity(loadViewRecipeActivity);
+        Bundle data = new Bundle();
+        //data.putParcelable("Recipe",);
+
+
+        //Intent loadViewRecipeActivity= new Intent(Home_Activity.this,View_Recipe_Activity.class);
+        //loadViewRecipeActivity.putExtras(data);
+        //startActivity(loadViewRecipeActivity);
     }
 }

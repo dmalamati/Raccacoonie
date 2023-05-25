@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class View_Recipe_Activity extends AppCompatActivity {
 
@@ -17,8 +21,19 @@ public class View_Recipe_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_recipe);
-
+        //UI ELEMENTS
         ImageButton view_profile_button= findViewById(R.id.view_profile_button);
+        TextView desc = findViewById(R.id.textView_description);
+        TextView title = findViewById(R.id.textView_title);
+        ImageView recipe_img = findViewById(R.id.imageView_recipe_image);
+
+
+        Intent intent = getIntent();
+        Bundle data = intent.getExtras();
+
+        //load UI according to recipe
+        title.setText(data.getString("Rec_title"));
+        recipe_img.setImageResource(data.getInt("Recipe_pic"));
         view_profile_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +95,9 @@ public class View_Recipe_Activity extends AppCompatActivity {
                 }
             }
         });
+
+
+
 
     }
 }
