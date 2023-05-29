@@ -1,4 +1,5 @@
 package com.example.raccacoonie;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -254,6 +255,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
              cursor = db.rawQuery(query,null);
         }
         return cursor;
+    }
+
+    @SuppressLint("Range")
+    public Integer getid(String user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT _id FROM USER WHERE username =?";
+        String[] selectionArgs = {user};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        @SuppressLint("Range") int id = 0;
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(cursor.getColumnIndex("_id"));
+        }
+        return id;
     }
 
 

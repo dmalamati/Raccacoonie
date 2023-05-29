@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Create_Activity extends AppCompatActivity {
+public class Create_Activity extends AppCompatActivity implements RecyclerViewInterface{
 
     int TEMP_CREATOR_ID = 2; //
 
@@ -37,6 +37,7 @@ public class Create_Activity extends AppCompatActivity {
         EditText execution = findViewById(R.id.editText_recipe_execution);
 
         DatabaseHandler myHandler = new DatabaseHandler(this,1);
+        RecyclerAdapter adapter=new RecyclerAdapter(this,this);
 
 
         home_button.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +103,7 @@ public class Create_Activity extends AppCompatActivity {
                    //todo: add pictures, for now "nullpic" works fine
                     // TODO: add an option for category and work the country of origin into the schema
                     submitRecipe(user_recipe,myHandler);
+                   // adapter.ogrecipes.add(user_recipe);
                 }
             }
         });
@@ -115,6 +117,11 @@ public class Create_Activity extends AppCompatActivity {
         Toast.makeText(this, String.valueOf(handler.recipe_count()), Toast.LENGTH_SHORT).show();
 
         //TODO: check if user has submitted a recipe with the same title.
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
 
     }
 }

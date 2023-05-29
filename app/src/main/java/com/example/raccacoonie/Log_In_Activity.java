@@ -40,7 +40,7 @@ public class Log_In_Activity extends AppCompatActivity {
                     //startActivity(loadHomeActivity);
                     Toast.makeText(Log_In_Activity.this, "Hello "+user, Toast.LENGTH_SHORT).show();
                    Intent loadHomeActivity= new Intent(Log_In_Activity.this,Home_Activity.class);
-                   loadHomeActivity.putExtra("user",user);
+                   loadHomeActivity.putExtra("id",dbh.getid(user));
                    startActivity(loadHomeActivity);
 
 

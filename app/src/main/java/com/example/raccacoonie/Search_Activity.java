@@ -14,15 +14,18 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Search_Activity extends AppCompatActivity implements RecyclerViewInterface{
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
+    RecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,8 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 //Set my Adapter for the RecyclerView
         adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
+
+
 
         ImageButton filters_button= findViewById(R.id.button_filters);
         filters_button.setOnClickListener(new View.OnClickListener() {
@@ -97,13 +102,22 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_sheet_layout);
         dialog.show();
+        Spinner categoryf=dialog.findViewById(R.id.spinner_category_filter);
+        Spinner tagf=dialog.findViewById(R.id.spinner_tag_filter);
+        EditText ingredientsf=dialog.findViewById(R.id.editText_recipe_ingredients_filter);
 
         Button apply_filters_button=dialog.findViewById(R.id.button_apply_filters);
         apply_filters_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String category=categoryf.getSelectedItem().toString();
+                String tag=tagf.getSelectedItem().toString();
+                String ingredients=ingredientsf.getText().toString();
                 Toast.makeText(Search_Activity.this,"Filters Applied",Toast.LENGTH_SHORT).show();
+
+
                 dialog.dismiss();
+                adapter.updateRecipes(category,tag,ingredients);
             }
         });
 

@@ -88,6 +88,8 @@ public class Recipe{
     public void setCategory(String category) {
         this.category = category;
     }
+    public void setDietaryStatus(int dietaryStatus){this.dietaryStatus=dietaryStatus;};
+    public int getDietaryStatus(){return dietaryStatus;}
 
 
 }
