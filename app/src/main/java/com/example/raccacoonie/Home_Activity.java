@@ -25,8 +25,8 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
         Bundle b=in.getExtras();
         if(b!=null)
         {
-            String user=(String) b.get("id");
-            Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
+            //String user=(String) b.get("id");
+            //Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
         }
 
 

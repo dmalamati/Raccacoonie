@@ -1,10 +1,5 @@
 package com.example.raccacoonie;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 /*
 db.execSQL("CREATE TABLE RECIPE (\n" +
                 "    _id          INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -20,9 +15,9 @@ db.execSQL("CREATE TABLE RECIPE (\n" +
 public class Recipe{
     int id,creator_id;
     int dietaryStatus; // 1 is pesceterian, 2 is vegeterian and 3 is vegan, anything else means it contains meat
-    String title,picture,execution,ingredients,category;
+    String title,picture,execution,ingredients,category,country;
 
-    public Recipe(int creator_id, String title, String picture, String execution, String ingredients, String category,int dietaryStatus) {
+    public Recipe(int creator_id, String title, String picture, String execution, String ingredients, String category, int dietaryStatus, String country) {
         this.creator_id = creator_id;
         this.title = title;
         this.picture = picture;
@@ -30,6 +25,7 @@ public class Recipe{
         this.ingredients = ingredients;
         this.category = category;
         this.dietaryStatus = dietaryStatus;
+        this.country = country;
 
         this.id = -1; // if not set by the database, id is -1
     }
@@ -39,6 +35,10 @@ public class Recipe{
 
        String out = String.format("%s %nCreator:%s %nExecution:%s %n",this.title,this.creator_id,this.execution);
         return out;
+    }
+    public String getCountry()
+    {
+        return this.country;
     }
 
     public int getCreator_id() {

@@ -3,16 +3,13 @@ package com.example.raccacoonie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Create_Activity extends AppCompatActivity implements RecyclerViewInterface{
@@ -99,7 +96,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
                    String recipe_title_str = recipe_title.getText().toString();
                    String execution_str = execution.getText().toString();
                    String ingredients_str = ingredients.getText().toString();
-                   Recipe user_recipe = new Recipe(-1,recipe_title_str,"nullpic",execution_str,ingredients_str,"Snack",0);
+                   Recipe user_recipe = new Recipe(-1,recipe_title_str,"nullpic",execution_str,ingredients_str,"Snack",0, "Greece");
                    //todo: add pictures, for now "nullpic" works fine
                     // TODO: add an option for category and work the country of origin into the schema
                     submitRecipe(user_recipe,myHandler);

@@ -29,11 +29,25 @@ public class View_Recipe_Activity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        Bundle data = intent.getExtras();
 
+        Bundle data = intent.getExtras();
         //load UI according to recipe
-        title.setText(data.getString("Rec_title"));
-        recipe_img.setImageResource(data.getInt("Recipe_pic"));
+        if(data != null)
+        {
+            Log.d("TITLE",title.getText().toString());
+            Log.d("DATA",data.getString("Rec_title"));
+            title.setText(data.getString("Rec_title"));
+            recipe_img.setImageResource(data.getInt("Recipe_pic"));
+            StringBuilder recipe_view = new StringBuilder();
+            recipe_view.append("Ingredients:\n");
+            recipe_view.append(data.getString("Recipe_ingredients"));
+            recipe_view.append("\n\n");
+            recipe_view.append("Execution:\n");
+            recipe_view.append(data.getString("Recipe_execution"));
+
+            desc.setText(recipe_view.toString());
+        }
+
         view_profile_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
