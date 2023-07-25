@@ -37,7 +37,8 @@
                 android:layout_marginStart="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/logo" />
+                app:srcCompat="@drawable/logo"
+                android:contentDescription="@string/logo" />
 
             <ImageButton
                 android:id="@+id/option_button"
@@ -45,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
-                android:contentDescription="options"
+                android:contentDescription="@string/options"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/options_icon" />
@@ -56,7 +57,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView4"
-        android:layout_width="414dp"
+        android:layout_width="match_parent"
         android:layout_height="72dp"
         android:background="#E6FEE0"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,12 +72,13 @@
                 android:id="@+id/home_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
-                android:contentDescription="home"
+                android:contentDescription="@string/home"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/search_button"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
@@ -86,59 +88,63 @@
                 android:id="@+id/search_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
-                android:contentDescription="search"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/search"
+                app:layout_constraintBottom_toBottomOf="@+id/home_button"
+                app:layout_constraintEnd_toStartOf="@+id/create_button"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/home_button"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/home_button"
                 app:srcCompat="@drawable/search_icon" />
 
             <ImageButton
                 android:id="@+id/create_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
-                android:contentDescription="create"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/create"
+                app:layout_constraintBottom_toBottomOf="@+id/search_button"
+                app:layout_constraintEnd_toStartOf="@+id/book_button"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/search_button"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/search_button"
                 app:srcCompat="@drawable/create_icon" />
 
             <ImageButton
                 android:id="@+id/book_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
-                android:contentDescription="saved"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/saved"
+                app:layout_constraintBottom_toBottomOf="@+id/create_button"
+                app:layout_constraintEnd_toStartOf="@+id/profile_button"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/create_button"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/create_button"
                 app:srcCompat="@drawable/book_color_icon" />
 
             <ImageButton
                 android:id="@+id/profile_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="19dp"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
-                android:contentDescription="profile"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/profile"
+                app:layout_constraintBottom_toBottomOf="@+id/book_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/book_button"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/book_button"
                 app:srcCompat="@drawable/profile_icon" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="599dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,31 +154,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageView10"
+            <TextView
+                android:id="@+id/textViewSavedRecipes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="26dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/tienne"
+                android:text="@string/saved_recipes"
+                android:textAlignment="center"
+                android:textColor="#6D7D69"
+                android:textSize="26sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/saved_recipes_text" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_saved_recipes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewSavedRecipes" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
