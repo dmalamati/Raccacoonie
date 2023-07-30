@@ -54,8 +54,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_category_filter" />
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView_country_filter"
+    <EditText
+        android:id="@+id/editText_country_filter"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="30dp"
@@ -89,7 +89,7 @@
         android:paddingVertical="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_country_filter" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_country_filter" />
 
     <EditText
         android:id="@+id/editText_recipe_creator_filter"

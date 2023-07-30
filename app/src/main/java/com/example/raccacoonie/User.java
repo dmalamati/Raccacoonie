@@ -1,6 +1,7 @@
 package com.example.raccacoonie;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User
 /**
@@ -14,6 +15,8 @@ public class User
     String password;
     String picture;
     ArrayList<Integer> posts;
+   ArrayList<String >likedRecipes;
+
 
     public User(String username, String password,String email) {
         this.username = username;
@@ -23,6 +26,7 @@ public class User
 
         this.id = -1; // if not set by the database, id is -1
         posts = new ArrayList<>();
+        likedRecipes=new ArrayList<>();
     }
 
     public int getPost(int id)

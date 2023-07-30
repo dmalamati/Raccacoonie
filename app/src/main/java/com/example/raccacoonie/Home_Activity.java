@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,20 +16,21 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
+    RecyclerAdapter adapter;
+    SharedPreferences sharedPreferences;
+    DatabaseHandler dbh;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPreferences=this.getSharedPreferences("MyPrefs",0);
+        Integer userid = sharedPreferences.getInt("id",-1);
+        Toast.makeText(this, userid.toString(), Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Intent in=getIntent();
-        Bundle b=in.getExtras();
-        if(b!=null)
-        {
-            //String user=(String) b.get("id");
-            //Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
-        }
+        dbh=new DatabaseHandler(this,1);
+        User loggedUser=dbh.getUserById(userid);
+
 
 
         recyclerView = findViewById(R.id.recyclerView_home_recipes);
@@ -54,6 +57,7 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
             @Override
             public void onClick(View v) {
                 Intent loadSearchActivity= new Intent(Home_Activity.this,Search_Activity.class);
+
                 startActivity(loadSearchActivity);
             }
         });
@@ -72,6 +76,7 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
             @Override
             public void onClick(View v) {
                 Intent loadSavedActivity= new Intent(Home_Activity.this,Saved_Activity.class);
+                adapter.fillLikedRecipes(loggedUser.likedRecipes);
                 startActivity(loadSavedActivity);
             }
         });

@@ -5,20 +5,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class Saved_Activity extends AppCompatActivity implements RecyclerViewInterface  {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
+    RecyclerAdapter adapter;
+    DatabaseHandler dbh;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved);
+        dbh=new DatabaseHandler(this,1);
+        sharedPreferences=this.getSharedPreferences("MyPrefs",0);
+        Integer userid = sharedPreferences.getInt("id",-1);
 
         recyclerView = findViewById(R.id.recyclerView_saved_recipes);
 //Set the layout of the items in the RecyclerView
@@ -27,6 +35,11 @@ public class Saved_Activity extends AppCompatActivity implements RecyclerViewInt
 //Set my Adapter for the RecyclerView
         adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
+        User loggedUser=dbh.getUserById(userid);
+
+
+
+
 
 
 
@@ -62,6 +75,7 @@ public class Saved_Activity extends AppCompatActivity implements RecyclerViewInt
             @Override
             public void onClick(View v) {
                 Intent loadSavedActivity= new Intent(Saved_Activity.this,Saved_Activity.class);
+                adapter.fillLikedRecipes(loggedUser.likedRecipes);
                 startActivity(loadSavedActivity);
             }
         });

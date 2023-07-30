@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
@@ -40,6 +44,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 //Set my Adapter for the RecyclerView
         adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
+
 
 
 
@@ -105,6 +110,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         Spinner categoryf=dialog.findViewById(R.id.spinner_category_filter);
         Spinner tagf=dialog.findViewById(R.id.spinner_tag_filter);
         EditText ingredientsf=dialog.findViewById(R.id.editText_recipe_ingredients_filter);
+        EditText countryf=dialog.findViewById(R.id.editText_country_filter);
 
         Button apply_filters_button=dialog.findViewById(R.id.button_apply_filters);
         apply_filters_button.setOnClickListener(new View.OnClickListener() {
@@ -113,11 +119,22 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
                 String category=categoryf.getSelectedItem().toString();
                 String tag=tagf.getSelectedItem().toString();
                 String ingredients=ingredientsf.getText().toString();
-                Toast.makeText(Search_Activity.this,"Filters Applied",Toast.LENGTH_SHORT).show();
+                String country=countryf.getText().toString();
+                Toast.makeText(Search_Activity.this,"Filters Applied"+country,Toast.LENGTH_SHORT).show();
+
 
 
                 dialog.dismiss();
-                adapter.updateRecipes(category,tag,ingredients);
+                adapter.updateRecipes(category,tag,ingredients,country);
+            }
+        });
+        Button clearbtn=dialog.findViewById(R.id.button_clear_filters);
+        clearbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.clearFilters();
+
+                Toast.makeText(Search_Activity.this, "Filters Cleared", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -126,6 +143,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
 
     @Override
     public void onItemClick(int position) {

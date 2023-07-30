@@ -2,6 +2,7 @@ package com.example.raccacoonie;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,7 +75,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 "chocolate_chip_cookies.jpg",
                 "1. Preheat the oven to 350°F. \n2. In a mixing bowl, cream together butter and sugars. \n3. Beat in eggs and vanilla. \n4. In a separate bowl, combine flour, baking soda, and salt. \n5. Gradually add the dry ingredients to the wet ingredients, mixing well. \n6. Stir in chocolate chips. \n7. Drop rounded tablespoons of dough onto a baking sheet. \n8. Bake for 10-12 minutes or until golden brown. \n9. Allow cookies to cool on the baking sheet for a few minutes before transferring to a wire rack.",
                 "Butter, granulated sugar, brown sugar, eggs, vanilla extract, all-purpose flour, baking soda, salt, chocolate chips",
-                "Dessert", 3, "United States"));
+                "Snack", 3, "United States"));
         ogrecipes.add(new Recipe(2, "Chicken Parmesan",
                 "chicken_parmesan.jpg",
                 "1. Preheat the oven to 375°F. \n2. Season chicken cutlets with salt, pepper, and Italian seasoning. \n3. Dip each cutlet in beaten egg, then coat with breadcrumbs. \n4. Heat oil in a skillet and cook the cutlets until golden brown. \n5. Place cooked cutlets in a baking dish and top with marinara sauce and shredded mozzarella cheese. \n6. Bake for 15-20 minutes or until the cheese is melted and bubbly. \n7. Serve with cooked spaghetti or your choice of pasta.",
@@ -101,44 +103,120 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 "Drink", 1, "Greece"));
     }
 
-    public void updateRecipes(String category,String tag,String ingredients) {
+    public void updateRecipes(String category,String tag,String ingredients,String country) {
 
         String [] filter_ingredients=ingredients.split(",");
         for (int i = 0; i < filter_ingredients.length; i++) {
             filter_ingredients[i] = filter_ingredients[i].trim();
         }
-
-
-        if (category.equals("Category") && tag.equals("Tag")) {
-            recipes.clear();
-            recipes.addAll(ogrecipes);
-        } else {
             recipes.clear();
             for (Recipe recipe : ogrecipes) {
-                int similarity=0;
-                String [] recipe_ingredients=recipe.ingredients.split(",");
+
+
+               /*if ( (category.equals(recipe.category) || types.get(tag)==recipe.dietaryStatus)|| similarity>=2||country.equals(recipe.country)) {
+                    recipes.add(recipe);
+                }*/
+
+                    if (category.equals("Category")) {
+                        if (tag.equals("Tag")) {
+                            if (country.equals(""))
+                                Toast.makeText(context, "null", Toast.LENGTH_SHORT).show();
+                            else {
+                                if (recipe.country.equals((country))){
+                                    recipes.add(recipe);
+                                }
+                            }
+                        } else {
+                            if (country.equals("")) {
+                                if (types.get(tag) == recipe.dietaryStatus) {
+                                    recipes.add(recipe);
+                                }
+                            } else {
+                                if (types.get(tag) == recipe.dietaryStatus && recipe.country.equals(country)) {
+                                    recipes.add(recipe);
+                                }
+                            }
+                        }
+
+                    } else {
+                        if (tag.equals("Tag")) {
+                            if (country.equals("")) {
+                                if (recipe.category.equals(category)) {
+                                    recipes.add(recipe);
+                                }
+                            } else {
+                                if (recipe.country.equals((country)) && recipe.category.equals(category)) {
+                                    recipes.add(recipe);
+                                }
+                            }
+                        } else {
+                            if (country.equals("")) {
+                                if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category)) {
+                                    recipes.add(recipe);
+                                }
+                            } else {
+                                if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category) && recipe.country.equals(country)) {
+                                    recipes.add(recipe);
+                                }
+                            }
+                        }
+                    }
+
+
+            if (ingredients.length()>0)
+            {
+
+
+                int similarity = 0;
+                String[] recipe_ingredients = recipe.ingredients.split(",");
                 for (int i = 0; i < recipe_ingredients.length; i++) {
                     recipe_ingredients[i] = recipe_ingredients[i].trim();
                 }
 
-                for(String word :filter_ingredients)
-                {
-                    if(Arrays.asList(recipe_ingredients).contains(word))
-                    {
+                for (String word : filter_ingredients) {
+                    if (Arrays.asList(recipe_ingredients).contains(word)) {
                         similarity++;
                     }
                 }
-
-
-                if ( category.equals(recipe.category) && types.get(tag)==recipe.dietaryStatus&& similarity>=2) {
+                if (similarity==0)
+                {
+                    recipes.remove(recipe);
+                }
+                else
+                {
                     recipes.add(recipe);
                 }
-            }
+            }}
 
 
-        }
+
+
         notifyDataSetChanged();
     }
+    public void clearFilters()
+    {
+        recipes.clear();
+        recipes.addAll(ogrecipes);
+        notifyDataSetChanged();
+    }
+    public void fillLikedRecipes(ArrayList<String> liked)
+    {
+        recipes.clear();
+
+        for (String title:liked)
+        {
+            for(Recipe recipe:ogrecipes)
+            {
+                if (recipe.title.equals(title))
+                {
+                    //recipes.add(recipe);
+                }
+            }
+        }
+      notifyDataSetChanged();
+    }
+
+
 
     //Class that holds the items to be displayed (Views in card_layout)
     static class ViewHolder extends RecyclerView.ViewHolder {
