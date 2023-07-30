@@ -23,7 +23,7 @@
             android:elevation="10dp"
             android:ems="10"
             android:fontFamily="@font/tienne"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="20dp"
             android:textSize="24sp"
@@ -33,7 +33,7 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="108dp"
             android:layout_marginTop="40dp"
@@ -46,7 +46,7 @@
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="126dp"
             android:layout_marginTop="4dp"
@@ -56,36 +56,25 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             app:srcCompat="@drawable/logo_circle_icon" />
 
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="103dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="104dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6"
-            app:srcCompat="@drawable/sign_up_text" />
 
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="30dp"
             android:background="@drawable/rounded_corners"
             android:elevation="10dp"
             android:ems="10"
             android:fontFamily="@font/tienne"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="20dp"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
             android:id="@+id/editTextUsername2"
@@ -112,10 +101,10 @@
             android:layout_width="0dp"
             android:layout_height="63dp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="30dp"
             android:fontFamily="@font/tienne"
-            android:text="I AGREE WITH CHEF RACCACOONIE’S  TERMS AND CONDITIONS"
+            android:text="@string/i_agree_with_chef_raccacoonie_s_terms_and_conditions"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -127,13 +116,14 @@
             android:layout_width="0dp"
             android:layout_height="49dp"
             android:layout_marginStart="90dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="90dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/round_corner_blue"
             android:elevation="20dp"
             android:fontFamily="@font/tienne"
-            android:text="LET'S DO THIS"
-            android:textColor="#FFFFFF"
+            android:text="@string/let_s_do_this"
+            android:textColor="#FEFEFE"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -141,6 +131,23 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="80dp"
+            android:fontFamily="@font/tienne"
+            android:text="@string/chef_raccacoonie_requires_your"
+            android:textAlignment="center"
+            android:textColor="#0B0000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
