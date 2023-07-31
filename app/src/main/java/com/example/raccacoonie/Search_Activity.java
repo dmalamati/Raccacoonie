@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -110,7 +111,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         Spinner categoryf=dialog.findViewById(R.id.spinner_category_filter);
         Spinner tagf=dialog.findViewById(R.id.spinner_tag_filter);
         EditText ingredientsf=dialog.findViewById(R.id.editText_recipe_ingredients_filter);
-        EditText countryf=dialog.findViewById(R.id.editText_country_filter);
+        AutoCompleteTextView countryf=dialog.findViewById(R.id.autoCompleteTextView_country_filter);
 
         Button apply_filters_button=dialog.findViewById(R.id.button_apply_filters);
         apply_filters_button.setOnClickListener(new View.OnClickListener() {
