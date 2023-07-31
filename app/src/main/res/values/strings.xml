@@ -35,7 +35,7 @@
     <string name="my_profile">MY PROFILE</string>
     <string name="shared_recipes">shared recipes:</string>
     <string name="saved_recipes">SAVED RECIPES</string>
-    <string name="filters">filters</string>
+    <string name="filters">Filters</string>
     <string name="back">back</string>
     <string name="like">like</string>
     <string name="view_profile">view_profile</string>
@@ -49,6 +49,13 @@
     <string name="dislike_num">100m</string>
     <string name="profile_icon">profile_icon</string>
     <string name="papaki_username">\@username</string>
+    <string name="ingredients">Ingredients\n e.g milk, sugar, flour</string>
+    <string name="creator">Creator</string>
+    <string name="apply">APPLY</string>
+    <string name="clear_all">CLEAR ALL</string>
+    <string name="country">Country</string>
+    <string name="execution">Execution</string>
+    <string name="e_g">e.g sugar 120gr \n salt 50gr</string>
     <array name="category">
         <item>Category</item>
         <item>Dinner</item>
