@@ -3,7 +3,9 @@ package com.example.raccacoonie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,15 +13,25 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class View_Recipe_Activity extends AppCompatActivity {
 
     private boolean isLiked;
     private boolean isDisliked;
     private boolean isSaved;
+    SharedPreferences sharedPreferences ;
+    DatabaseHandler dbh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
+        dbh=new DatabaseHandler(this,1);
+
         setContentView(R.layout.activity_view_recipe);
         //UI ELEMENTS
         ImageButton view_profile_button= findViewById(R.id.view_profile_button);
@@ -27,7 +39,12 @@ public class View_Recipe_Activity extends AppCompatActivity {
         TextView title = findViewById(R.id.textView_title);
         ImageView recipe_img = findViewById(R.id.imageView_recipe_image);
 
+        sharedPreferences=this.getSharedPreferences("MyPrefs",0);
+        Integer userid = sharedPreferences.getInt("id",-1);
+        Toast.makeText(this, userid.toString(), Toast.LENGTH_SHORT).show();
+        User loggedUser=dbh.getUserById(userid);
 
+        ImageButton  back_button=findViewById(R.id.back_button);
         Intent intent = getIntent();
 
         Bundle data = intent.getExtras();
@@ -103,13 +120,22 @@ public class View_Recipe_Activity extends AppCompatActivity {
                 if (!isSaved){
                     isSaved=true;
                     save_button.setImageDrawable(getResources().getDrawable(R.drawable.save_color_icon));
+
+
                 }else{
                     isSaved=false;
                     save_button.setImageDrawable(getResources().getDrawable(R.drawable.save_icon));
                 }
+                loggedUser.likedRecipes.add(data.getString("Rec_title"));
+                Toast.makeText(View_Recipe_Activity.this, data.getString("Rec_title"), Toast.LENGTH_SHORT).show();
             }
         });
-
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
 

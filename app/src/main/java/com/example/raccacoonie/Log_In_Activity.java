@@ -1,6 +1,8 @@
 package com.example.raccacoonie;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,13 +13,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Log_In_Activity extends AppCompatActivity {
+
     EditText username;
     EditText password;
     DatabaseHandler dbh;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         Button log_in_button = findViewById(R.id.button_log_in);
@@ -38,9 +41,17 @@ public class Log_In_Activity extends AppCompatActivity {
                 {
                   //  Intent loadHomeActivity= new Intent(Log_In_Activity.this,Home_Activity.class);
                     //startActivity(loadHomeActivity);
-                    Toast.makeText(Log_In_Activity.this, "Hello "+user, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Log_In_Activity.this, "Hello "+user, Toast.LENGTH_SHORT).show();
                    Intent loadHomeActivity= new Intent(Log_In_Activity.this,Home_Activity.class);
-                   loadHomeActivity.putExtra("id",dbh.getid(user));
+                    if (sharedPreferences != null) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("id", dbh.getid(user));
+                        editor.apply();
+                    } else {
+                        // Handle the case when the shared preferences object is null
+                        Log.d("error","its null");
+                        // Log an error or take appropriate action
+                    }
                    startActivity(loadHomeActivity);
 
 

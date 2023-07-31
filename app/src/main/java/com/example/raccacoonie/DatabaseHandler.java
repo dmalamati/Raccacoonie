@@ -144,19 +144,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     }
-    public User getUserById(int id)
-    {
+    public User getUserById(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
+        User user = null;
 
         String query = "SELECT * FROM USER WHERE _id = ?";
         String[] selectionArgs = {String.valueOf(id)};
 
         Cursor cursor = db.rawQuery(query, selectionArgs);
-        if (cursor.getCount() > 0)
-        {
-            //todo:build this so it returns the correct user
+        if (cursor.moveToFirst()) {
+            // Retrieve the user details from the cursor
+            @SuppressLint("Range") String password = cursor.getString(cursor.getColumnIndex("password"));
+            @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex("username"));
+            @SuppressLint("Range") String email=cursor.getString(cursor.getColumnIndex("email"));
+
+            // Instantiate the User object and populate it with the retrieved data
+            user = new User(username,password,email);
+
+
+
+            // Close the cursor
+            cursor.close();
         }
-        return null;
+        return user;
     }
     //todo: build this
     public boolean userExists(int id)

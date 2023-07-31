@@ -100,7 +100,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
                    //todo: add pictures, for now "nullpic" works fine
                     // TODO: add an option for category and work the country of origin into the schema
                     submitRecipe(user_recipe,myHandler);
-                   // adapter.ogrecipes.add(user_recipe);
+                    adapter.ogrecipes.add(user_recipe);
                 }
             }
         });
