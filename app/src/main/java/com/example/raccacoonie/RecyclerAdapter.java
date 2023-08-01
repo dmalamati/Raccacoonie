@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
@@ -43,6 +45,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     ArrayList<Recipe> recipes = new ArrayList<>();
     ArrayList<Recipe>ogrecipes=new ArrayList<>();
     ArrayList<Integer> pics = new ArrayList<>();
+
+    ArrayList<Integer> likes = new ArrayList<>();
+    ArrayList<Integer> dislikes = new ArrayList<>();
     Map<String,Integer> types=new HashMap<>();
 
 
@@ -58,6 +63,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         types.put("Vegan",3);
         types.put("Tag",0);
 
+    }
+    public void generateRatings()
+    /**
+     * Fills the likes and dislikes of each recipe
+     */
+    {
+        for (int i  = 0 ; i < ogrecipes.size();i++)
+        {
+            likes.add(ThreadLocalRandom.current().nextInt(5, 121));
+            dislikes.add(ThreadLocalRandom.current().nextInt(0, 11));
+        }
+        if (likes != null && !likes.isEmpty()) {
+            for (int  item : likes) {
+                Log.d("likes", "Item: " + String.valueOf(item));
+            }
+        } else {
+            Log.d("likes", "ArrayList is null or empty");
+        }
     }
     public void fillPics()
     /**
@@ -101,6 +124,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 "1. In a blender, combine a ripe banana, a spoonful of peanut butter, and a cup of milk. \n2. Add a drizzle of honey and a pinch of cinnamon. \n3. Blend until smooth and creamy. \n4. Pour into a glass and enjoy as a delicious and energizing smoothie.",
                 "Banana, peanut butter, milk, honey, cinnamon",
                 "Drink", 1, "Greece"));
+
+        likes.add(12);
+        likes.add(25);
+        likes.add(41);
+        likes.add(14);
+        likes.add(78);
+        likes.add(54);
+
+        dislikes.add(3);
+        dislikes.add(5);
+        dislikes.add(0);
+        dislikes.add(0);
+        dislikes.add(2);
+        dislikes.add(9);
     }
 
     public void updateRecipes(String category,String tag,String ingredients,String country) {
@@ -246,6 +283,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     data.putString("Recipe_execution",((RecyclerAdapter) adapter).recipes.get(position).getExecution());
                     data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[position]);
                     data.putString("Recipe_ingredients",((RecyclerAdapter) adapter).recipes.get(position).getIngredients());
+                    data.putInt("likes",((RecyclerAdapter) adapter).recipes.get(position).getLikes());
+                    data.putInt("dislikes",((RecyclerAdapter) adapter).recipes.get(position).getDislikes());
 
 
                     intent.putExtras(data);
@@ -273,6 +312,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_layout, parent, false);
+
 
         return new ViewHolder(v, recyclerViewInterface);
     }

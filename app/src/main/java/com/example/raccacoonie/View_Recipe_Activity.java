@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class View_Recipe_Activity extends AppCompatActivity {
 
@@ -25,15 +26,41 @@ public class View_Recipe_Activity extends AppCompatActivity {
     SharedPreferences sharedPreferences ;
     DatabaseHandler dbh;
 
+
+    public void updateLikeStatus(int likes,int dislikes)
+    {
+
+        TextView shown_likes = findViewById(R.id.textView_like_number);
+        TextView shown_dislikes = findViewById(R.id.textView_dislike_number);
+        shown_likes.setText(String.valueOf(likes));
+        shown_dislikes.setText(String.valueOf(dislikes));
+
+    }
+    public void increaseLikes(int amount)
+    {
+        TextView shown_likes = findViewById(R.id.textView_like_number);
+        int likes = Integer.parseInt(String.valueOf(shown_likes.getText()));
+        shown_likes.setText(String.valueOf(likes + amount));
+    }
+    public void increaseDislikes(int amount)
+    {
+        TextView shown_dislikes = findViewById(R.id.textView_dislike_number);
+        int dislikes = Integer.parseInt(String.valueOf(shown_dislikes.getText()));
+        shown_dislikes.setText(String.valueOf(dislikes + amount));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
 
         super.onCreate(savedInstanceState);
         dbh=new DatabaseHandler(this,1);
 
         setContentView(R.layout.activity_view_recipe);
+
         //UI ELEMENTS
+        //updateLikeStatus();
         ImageButton view_profile_button= findViewById(R.id.view_profile_button);
         TextView desc = findViewById(R.id.textView_description);
         TextView title = findViewById(R.id.textView_title);
@@ -51,8 +78,7 @@ public class View_Recipe_Activity extends AppCompatActivity {
         //load UI according to recipe
         if(data != null)
         {
-            Log.d("TITLE",title.getText().toString());
-            Log.d("DATA",data.getString("Rec_title"));
+
             title.setText(data.getString("Rec_title"));
             recipe_img.setImageResource(data.getInt("Recipe_pic"));
             StringBuilder recipe_view = new StringBuilder();
@@ -61,6 +87,11 @@ public class View_Recipe_Activity extends AppCompatActivity {
             recipe_view.append("\n\n");
             recipe_view.append("Execution:\n");
             recipe_view.append(data.getString("Recipe_execution"));
+
+            TextView shown_likes = findViewById(R.id.textView_like_number);
+            TextView shown_dislikes = findViewById(R.id.textView_dislike_number);
+            shown_likes.setText(String.valueOf(data.getInt("likes")));
+            shown_dislikes.setText(String.valueOf(data.getInt("dislikes")));
 
             desc.setText(recipe_view.toString());
         }
@@ -82,15 +113,23 @@ public class View_Recipe_Activity extends AppCompatActivity {
                 if (!isLiked && !isDisliked) {
                     isLiked = true;
                     like_button.setImageDrawable(getResources().getDrawable(R.drawable.like_color_icon));
+                    increaseLikes(1);
+
                 } else if (!isLiked ) {
                     isLiked = true;
                     isDisliked=false;
                     like_button.setImageDrawable(getResources().getDrawable(R.drawable.like_color_icon));
                     dislike_button.setImageDrawable(getResources().getDrawable(R.drawable.dislike_icon));
+                    increaseLikes(1);
+                    increaseDislikes(-1);
+
                 }else{
                     isLiked=false;
                     like_button.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
+                    increaseLikes(-1);
+
                 }
+               // updateLikeStatus();
             }
         });
         dislike_button.setOnClickListener(new View.OnClickListener() {
@@ -100,15 +139,23 @@ public class View_Recipe_Activity extends AppCompatActivity {
                 if (!isDisliked && !isLiked) {
                     isDisliked = true;
                     dislike_button.setImageDrawable(getResources().getDrawable(R.drawable.dislike_color_icon));
+                    increaseDislikes(1);
+
                 } else if (!isDisliked ) {
                     isDisliked = true;
                     isLiked=false;
                     dislike_button.setImageDrawable(getResources().getDrawable(R.drawable.dislike_color_icon));
                     like_button.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
+                    increaseDislikes(1);
+                    increaseLikes(-1);
+
                 }else{
                     isDisliked=false;
                     dislike_button.setImageDrawable(getResources().getDrawable(R.drawable.dislike_icon));
+                    increaseDislikes(-1);
+
                 }
+               // updateLikeStatus();
             }
         });
 

@@ -1,5 +1,7 @@
 package com.example.raccacoonie;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /*
 db.execSQL("CREATE TABLE RECIPE (\n" +
                 "    _id          INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -13,7 +15,7 @@ db.execSQL("CREATE TABLE RECIPE (\n" +
                 ");\n");
  */
 public class Recipe{
-    int id,creator_id;
+    int id,creator_id,likes,dislikes;
     int dietaryStatus; // 1 is pesceterian, 2 is vegeterian and 3 is vegan, anything else means it contains meat
     String title,picture,execution,ingredients,category,country;
 
@@ -28,6 +30,8 @@ public class Recipe{
         this.country = country;
 
         this.id = -1; // if not set by the database, id is -1
+        this.likes = ThreadLocalRandom.current().nextInt(5, 121);
+        this.dislikes = ThreadLocalRandom.current().nextInt(0, 11);
     }
     @Override
     public String toString()
@@ -39,6 +43,21 @@ public class Recipe{
     public String getCountry()
     {
         return this.country;
+    }
+
+    public int getLikes()
+    {
+        return this.likes;
+    }
+    public int getDislikes()
+    {return this.dislikes;}
+    public void  increaseLikes(int amount)
+    {
+        this.likes += amount;
+    }
+    public void  increaseDislikes(int amount)
+    {
+        this.dislikes += amount;
     }
 
     public int getCreator_id() {
