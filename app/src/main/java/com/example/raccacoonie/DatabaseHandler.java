@@ -22,6 +22,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public DatabaseHandler(Context context,int version) {
         super(context, DATABASE_NAME, null, version);
     }
+    public void wipe_recipes()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM RECIPE;");
+        Log.d("DEBUG","DELETED RECIPES");
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create table query
@@ -35,16 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                // "    picture_id NUMERIC,\n" +
                 "    _id        INTEGER        PRIMARY KEY AUTOINCREMENT\n" +
                 ");\n");
-       /* // recipes
-        db.execSQL("CREATE TABLE RECIPE (\n" +
-                "    _id          INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "    title       TEXT    NOT NULL,\n" +
-                "    isVegan     INTEGER DEFAULT (0),\n" +
-                "    pitcture_id INTEGER,\n" +
-                "    execution   TEXT    DEFAULT 'none_provided'," +
-                "    creator     INTEGER\n" +
-                ");\n");*/
-        //recipes
+
         db.execSQL("CREATE TABLE RECIPE (\n" +
                 "    _id          INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    title       TEXT    NOT NULL,\n" +
@@ -96,7 +93,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM USER",null);
         for (int i = 0 ; i < 20; i++)
         {
-            Log.d("cursos count",String.valueOf(cursor.getCount()));
+            Log.d("cursor count",String.valueOf(cursor.getCount()));
         }
 
 
@@ -121,6 +118,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return false ;
+    }
+
+    public void printRecipes_db()
+    {
+        Log.d("DEBUG","BEGINE PRINTING RECIPES");
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor1 = db.rawQuery("SELECT * FROM RECIPE", null);
+        if (cursor1 != null && cursor1.moveToFirst()) {
+            do {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < cursor1.getColumnCount(); i++) {
+                    String columnName = cursor1.getColumnName(i);
+                    String columnValue = cursor1.getString(i);
+                    sb.append(columnName).append(": ").append(columnValue).append(", ");
+                }
+                Log.d("Recipe", sb.toString());
+            } while (cursor1.moveToNext());
+        }
+        Log.d("DEBUG","END PRINTING RECIPES");
+        cursor1.close();
     }
     public boolean checkEmail(String mail)
     {
@@ -213,7 +230,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM RECIPE",null);
         return cursor.getCount();
     }
-
+   public Cursor rawQuery(String query)
+   {
+       SQLiteDatabase db = this.getWritableDatabase();
+       return db.rawQuery(query,null);
+   }
     public String getRecipe(int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();

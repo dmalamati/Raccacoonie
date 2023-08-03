@@ -2,10 +2,9 @@ package com.example.raccacoonie;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +48,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     ArrayList<Integer> likes = new ArrayList<>();
     ArrayList<Integer> dislikes = new ArrayList<>();
     Map<String,Integer> types=new HashMap<>();
+    int preloaded = 0;
 
 
 
@@ -56,7 +56,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.recyclerViewInterface = recyclerViewInterface;
         this.context = context;
         fillPics();
-        fillOgRecipes();
+        fillRecipeList();
         recipes.addAll(ogrecipes);
         types.put("Pescetarian",1);
         types.put("Vegetarian",2);
@@ -92,7 +92,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             pics.add(R.drawable.recipe_image);
         }
     }
-    public void fillOgRecipes()
+    public void fillRecipeList()
     {
         ogrecipes.add(new Recipe(1, "Classic Chocolate Chip Cookies",
                 "chocolate_chip_cookies.jpg",
@@ -125,6 +125,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 "Banana, peanut butter, milk, honey, cinnamon",
                 "Drink", 1, "Greece"));
 
+        preloaded = ogrecipes.size();
+
+        addRecipesFromDatabase(ogrecipes);
+
         likes.add(12);
         likes.add(25);
         likes.add(41);
@@ -138,7 +142,50 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         dislikes.add(0);
         dislikes.add(2);
         dislikes.add(9);
+
     }
+
+    public void addRecipesFromDatabase(ArrayList<Recipe> recipe_list)
+    {
+        DatabaseHandler myHandler  = new DatabaseHandler(context.getApplicationContext(), 1);
+
+
+        Cursor cursor = myHandler.getRecipes(-1);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    String columnName = cursor.getColumnName(i);
+                    String columnValue = cursor.getString(i);
+                    sb.append(columnName).append(": ").append(columnValue).append(", ");
+                }
+                Log.d("Recipe", sb.toString());
+                Recipe new_recipe = new Recipe(-1,cursor.getString(1),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(7),cursor.getInt(2),"Greece"); //ADD RECIPES
+
+                ogrecipes.add(new_recipe);
+            } while (cursor.moveToNext());}
+        //ogrecipes.add(new Recipe(-2,"test title","nullpic","test exec","test ingredients","snack",2,"Greece"));
+        notifyDataSetChanged();
+    }
+
+    public void addNewRecipeToView(int count)
+    /**
+     * Adds the newest entries to the RecyclerView.
+     * @param count is how many entries it will add, starting from the newest rows of the RECIPE table
+     *              returns if count < 1
+     */
+    {
+        if (count<1)
+        {
+            Log.d("DEBUG error","asked to add less than one recipe on view");
+        }else
+        {
+            DatabaseHandler myHandler  = new DatabaseHandler(context.getApplicationContext(), 1);
+             Cursor cursor = myHandler.rawQuery("SELECT * FROM mytable ORDER BY ROWID DESC LIMIT 1");
+
+        }
+    }
+
 
     public void updateRecipes(String category,String tag,String ingredients,String country) {
 
@@ -281,7 +328,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     //FILL RECIPE DATA ON BUNDLE TO GIVE TO THE ACTIVITY
                     data.putString("Rec_title",((RecyclerAdapter) adapter).recipes.get(position).title);
                     data.putString("Recipe_execution",((RecyclerAdapter) adapter).recipes.get(position).getExecution());
-                    data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[position]);
+                    if (position < ((RecyclerAdapter) adapter).preloaded)
+                    {
+
+                        data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[position]);
+                    }else
+                    {
+                        data.putInt("Recipe_pic",R.drawable.recipe_image);
+                    }
+
+
                     data.putString("Recipe_ingredients",((RecyclerAdapter) adapter).recipes.get(position).getIngredients());
                     data.putInt("likes",((RecyclerAdapter) adapter).recipes.get(position).getLikes());
                     data.putInt("dislikes",((RecyclerAdapter) adapter).recipes.get(position).getDislikes());
@@ -324,8 +380,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.itemTitle.setText(recipes.get(position).title);
+        if (position < recipeDrawables.length)
+        {
+            holder.itemImage.setImageResource(recipeDrawables[position]);
+        }else
+        {
+            holder.itemImage.setImageResource(R.drawable.recipe_image);
+        }
 
-        holder.itemImage.setImageResource(recipeDrawables[position]);
         //MIN PEIRAKSEI KANEIS TO PANO, EIMAI POLI EKSIPNOS POU TO SKEFTIKA
     }
     @Override
