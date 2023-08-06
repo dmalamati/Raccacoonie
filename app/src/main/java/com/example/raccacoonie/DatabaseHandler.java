@@ -61,10 +61,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO USER VALUES('pavlidvg.csd.auth.gr','pavlidvg','testpass123',1)");
         db.execSQL("INSERT INTO USER VALUES('dmalamati.csd.auth.gr','dmalamati','test123',2)");
 
-        db.execSQL("INSERT INTO RECIPE (title, dietaryStatus, picture, execution, ingredients, creator_id, category)\n" +
-                "VALUES ('Spaghetti Bolognese', 1, 'spaghetti.jpg', 'Cook spaghetti, prepare Bolognese sauce, and mix together.', 'Spaghetti, ground beef, tomatoes, onions, garlic, herbs', 1, 'Italian');");
-        db.execSQL("INSERT INTO RECIPE (title, dietaryStatus, picture, execution, ingredients, creator_id, category)\n" +
-                "VALUES ('Chicken Stir-Fry', 0, 'stirfry.jpg', 'Heat oil in a pan, add chicken and vegetables, stir-fry until cooked.', 'Chicken breast, bell peppers, broccoli, carrots, soy sauce, ginger', 2, 'Asian');");
+
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -122,7 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void printRecipes_db()
     {
-        Log.d("DEBUG","BEGINE PRINTING RECIPES");
+        Log.d("DEBUG","BEGIN PRINTING RECIPES");
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor1 = db.rawQuery("SELECT * FROM RECIPE", null);
         if (cursor1 != null && cursor1.moveToFirst()) {

@@ -23,6 +23,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
+
         //get elements
         String[] countries = getResources().getStringArray(R.array.countries);
         AutoCompleteTextView country = findViewById(R.id.autoCompleteTextView_country);
@@ -35,15 +36,13 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
         EditText ingredients = findViewById(R.id.editText_recipe_ingredients);
         EditText execution = findViewById(R.id.editText_recipe_execution);
         Spinner category_spinner = findViewById(R.id.spinner_category);
+        Spinner tag_spinner = findViewById(R.id.spinner_tag);
 
         DatabaseHandler myHandler = new DatabaseHandler(this,1);
         RecyclerAdapter adapter=new RecyclerAdapter(this,this);
-        myHandler.printRecipes_db();
-        Log.d("debug","nowww what");
-        //myHandler.wipe_recipes();
-        myHandler.addRecipe(adapter.ogrecipes.get(0));
-        myHandler.printRecipes_db();
-        //TODO: DELETE THIS LATER
+
+
+
 
        //debug
         myHandler.printRecipes_db();
@@ -73,7 +72,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
             public void onClick(View v) {
                 Intent loadCreateActivity= new Intent(Create_Activity.this,Create_Activity.class);
                 startActivity(loadCreateActivity);
-                Log.d("DEBUG","eeeeeeeeeeeeeeee");
+
             }
         });
 
@@ -101,15 +100,33 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
                 if (ingredients.getText().length() == 0 || recipe_title.getText().length()==0|| execution.getText().length()==0)
                 {
-                    Toast.makeText(Create_Activity.this, "Please add all the necessary fields before sharing", Toast.LENGTH_SHORT).show();
+
+                    //Toast.makeText(Create_Activity.this, String.valueOf(myHandler.recipe_count()), Toast.LENGTH_SHORT).show();
+                   // myHandler.printRecipes_db();
+                    //Toast.makeText(Create_Activity.this, "Please add all the necessary fields before sharing", Toast.LENGTH_SHORT).show();
 
 
                 }else
                 {
-                   String recipe_title_str = recipe_title.getText().toString();
+
+                    String recipe_title_str = recipe_title.getText().toString();
                    String execution_str = execution.getText().toString();
                    String ingredients_str = ingredients.getText().toString();
                    String country_str = country.getText().toString();
+
+                   int dietaryStatus = 0;
+
+
+                   if (tag_spinner.getSelectedItem().toString().equals("Pescetarian"))
+                   {
+                       dietaryStatus = 1;
+                   }else if(tag_spinner.getSelectedItem().toString().equals("Vegetarian"))
+                   {
+                       dietaryStatus = 2;
+                   }else if (tag_spinner.getSelectedItem().toString().equals("Vegan"))
+                   {
+                       dietaryStatus = 3;
+                   }
 
                    String category = "Dinner";
                    if (category_spinner.getSelectedItem().toString().equals("Snack"))
@@ -124,17 +141,19 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
                    }
 
                    //myHandler.printRecipes_db();
-                   Log.d("DEBUG","-------------");
 
-                   Recipe user_recipe = new Recipe(-1,recipe_title_str,"nullpic",execution_str,ingredients_str,category,0, country_str);
+                   Recipe user_recipe = new Recipe(-1,recipe_title_str,"nullpic",execution_str,ingredients_str,category,dietaryStatus, country_str);
                    //todo: add pictures, for now "nullpic" works fine
-                    // TODO: add an option for category and work the country of origin into the schema
+
 
                     //backend for recipe input
 
                     submitRecipe(user_recipe,myHandler);
+
                    adapter.ogrecipes.add(user_recipe);
                    adapter.notifyItemInserted(adapter.getItemCount()-1);
+
+
 
                 }
             }

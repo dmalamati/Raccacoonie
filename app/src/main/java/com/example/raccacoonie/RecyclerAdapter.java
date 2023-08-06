@@ -47,6 +47,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     ArrayList<Integer> likes = new ArrayList<>();
     ArrayList<Integer> dislikes = new ArrayList<>();
+
+    ArrayList<Boolean> isLiked = new ArrayList<>();
     Map<String,Integer> types=new HashMap<>();
     int preloaded = 0;
 
@@ -57,6 +59,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.context = context;
         fillPics();
         fillRecipeList();
+
         recipes.addAll(ogrecipes);
         types.put("Pescetarian",1);
         types.put("Vegetarian",2);
@@ -76,7 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
         if (likes != null && !likes.isEmpty()) {
             for (int  item : likes) {
-                Log.d("likes", "Item: " + String.valueOf(item));
+
             }
         } else {
             Log.d("likes", "ArrayList is null or empty");
@@ -374,12 +377,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
     public Recipe getRecipefromPosition(int pos)
     {
-        return this.recipes.get(pos);
+        return this.ogrecipes.get(pos);
+    }
+    public void print_all_recipes_view()
+    {
+        Log.d("DEBUG","BEGIN");
+        for (Recipe x : ogrecipes)
+        {
+            Log.d("Recipe",x.title);
+
+        }
+        Log.d("DEBUG","END");
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.itemTitle.setText(recipes.get(position).title);
+        holder.itemTitle.setText(ogrecipes.get(position).title);
         if (position < recipeDrawables.length)
         {
             holder.itemImage.setImageResource(recipeDrawables[position]);
@@ -392,7 +405,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
     @Override
     public int getItemCount() {
-        return recipes.size();
+        return ogrecipes.size();
         //return titles.length;
     }
     public void fillTitles(int limit)
