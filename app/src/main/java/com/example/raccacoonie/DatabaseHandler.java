@@ -58,6 +58,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 "    likes      INTEGER,\n" +
                 "    dislikes   INTEGER\n" +
                 ");\n");
+
+        db.execSQL("CREATE TABLE LIKES(\n" +
+                "user_id NUMERIC,\n" +
+                "post_id NUMERIC,\n" +
+                "PRIMARY KEY (user_id,post_id)\n" +
+                ");");
+
+
         db.execSQL("INSERT INTO USER VALUES('pavlidvg.csd.auth.gr','pavlidvg','testpass123',1)");
         db.execSQL("INSERT INTO USER VALUES('dmalamati.csd.auth.gr','dmalamati','test123',2)");
 
@@ -156,6 +164,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
 
+    }
+
+    public boolean isPostLikedByUser(int post_id, int user_id)
+    {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        Cursor query = db.rawQuery("SELECT * FROM LIKES WHERE post_id = ? AND user_id = ? ",arguments);
+
+        if (query.getCount()> 0 )
+        {
+            return true;
+        }
+        return false;
+    }
+    public void LikePost(int post_id, int user_id)
+    {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (isPostLikedByUser(post_id,user_id))
+        {
+            return;
+        }
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        ContentValues like = new ContentValues();
+        like.put("post_id",arguments[0]);
+        like.put("user_id",arguments[1]);
+        db.insert("LIKES",null,like);
+    }
+    public void unlikePost(int post_id, int user_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        if (isPostLikedByUser(post_id,user_id))
+        {
+            db.execSQL("DELETE FROM LIKES WHERE post_id = ? AND user_id = ?",arguments);
+        }
 
     }
     public User getUserById(int id) {
@@ -283,6 +329,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
              cursor = db.rawQuery(query,null);
         }
         return cursor;
+    }
+
+    public int getLastId()
+    {
+        Cursor cursor;
+        SQLiteDatabase db = this.getWritableDatabase();
+        cursor = db.rawQuery("SELECT * FROM RECIPE ORDER BY _id DESC LIMIT 1",null);
+        if (cursor.getCount() < 1 )
+            Log.d("GAMO","TIN PANAGIA");
+        return 21;
     }
 
     @SuppressLint("Range")

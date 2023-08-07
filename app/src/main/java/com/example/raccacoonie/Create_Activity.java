@@ -44,6 +44,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
 
+
        //debug
         myHandler.printRecipes_db();
 
@@ -103,7 +104,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
                     //Toast.makeText(Create_Activity.this, String.valueOf(myHandler.recipe_count()), Toast.LENGTH_SHORT).show();
                    // myHandler.printRecipes_db();
-                    //Toast.makeText(Create_Activity.this, "Please add all the necessary fields before sharing", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Create_Activity.this, "Please add all the necessary fields before sharing", Toast.LENGTH_SHORT).show();
 
 
                 }else
@@ -148,10 +149,13 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
                     //backend for recipe input
 
-                    submitRecipe(user_recipe,myHandler);
+                    int recipe_id = submitRecipe(user_recipe,myHandler);
 
                    adapter.ogrecipes.add(user_recipe);
+                   adapter.post_id.add(recipe_id);
+                    Toast.makeText(Create_Activity.this, String.valueOf(recipe_id), Toast.LENGTH_SHORT).show();
                    adapter.notifyItemInserted(adapter.getItemCount()-1);
+
 
 
 
@@ -160,11 +164,12 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
         });
 
     }
-    public void submitRecipe(Recipe r, DatabaseHandler handler)
+    public int submitRecipe(Recipe r, DatabaseHandler handler)
     {
         Toast.makeText(this, "Recipe was created", Toast.LENGTH_SHORT).show();
 
         handler.addRecipe(r);
+        return handler.getLastId();
         //Toast.makeText(this, String.valueOf(handler.recipe_count()), Toast.LENGTH_SHORT).show();
 
 

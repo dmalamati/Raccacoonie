@@ -49,6 +49,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     ArrayList<Integer> dislikes = new ArrayList<>();
 
     ArrayList<Boolean> isLiked = new ArrayList<>();
+
+    ArrayList<Integer> post_id = new ArrayList<>();
     Map<String,Integer> types=new HashMap<>();
     int preloaded = 0;
 
@@ -117,18 +119,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 "1. Heat oil in a wok or skillet over high heat. \n2. Add sliced vegetables (e.g., bell peppers, carrots, broccoli, snap peas). \n3. Stir-fry for a few minutes until vegetables are crisp-tender. \n4. In a small bowl, mix together soy sauce, ginger, and garlic. \n5. Pour the sauce over the vegetables and stir-fry for another minute. \n6. Serve hot over steamed rice or noodles.",
                 "Assorted vegetables (bell peppers, carrots, broccoli, snap peas), oil, soy sauce, ginger, garlic, steamed rice or noodles",
                 "Dinner", 1, "China"));
-        ogrecipes.add(new Recipe(1, "Avocado Toast",
+        ogrecipes.add(new Recipe(5, "Avocado Toast",
                 "avocado_toast.jpg",
                 "1. Toast a slice of bread until golden brown. \n2. Mash half an avocado and spread it on the toast. \n3. Sprinkle with salt, pepper, and red pepper flakes to taste. \n4. Optionally, top with sliced tomatoes, a drizzle of olive oil, or a squeeze of lemon juice. \n5. Enjoy as a quick and healthy breakfast or snack.",
                 "Bread, avocado, salt, pepper, red pepper flakes",
                 "Snack", 1, "United States"));
-        ogrecipes.add(new Recipe(4, "Peanut Butter Banana Smoothie",
+        ogrecipes.add(new Recipe(6, "Peanut Butter Banana Smoothie",
                 "peanut_butter_smoothie.jpg",
                 "1. In a blender, combine a ripe banana, a spoonful of peanut butter, and a cup of milk. \n2. Add a drizzle of honey and a pinch of cinnamon. \n3. Blend until smooth and creamy. \n4. Pour into a glass and enjoy as a delicious and energizing smoothie.",
                 "Banana, peanut butter, milk, honey, cinnamon",
                 "Drink", 1, "Greece"));
 
         preloaded = ogrecipes.size();
+        for (Recipe rec : ogrecipes)
+        {
+            post_id.add(rec.creator_id); //all preloaded recipes get an id form 1 to 6
+        }
 
         addRecipesFromDatabase(ogrecipes);
 
@@ -166,6 +172,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 Recipe new_recipe = new Recipe(-1,cursor.getString(1),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(7),cursor.getInt(2),"Greece"); //ADD RECIPES
 
                 ogrecipes.add(new_recipe);
+                post_id.add(cursor.getInt(0)); //add the id so the recycler post_id array has access
             } while (cursor.moveToNext());}
         //ogrecipes.add(new Recipe(-2,"test title","nullpic","test exec","test ingredients","snack",2,"Greece"));
         notifyDataSetChanged();

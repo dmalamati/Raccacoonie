@@ -60,7 +60,6 @@ public class View_Recipe_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_view_recipe);
 
         //UI ELEMENTS
-        //updateLikeStatus();
         ImageButton view_profile_button= findViewById(R.id.view_profile_button);
         TextView desc = findViewById(R.id.textView_description);
         TextView title = findViewById(R.id.textView_title);
@@ -68,11 +67,19 @@ public class View_Recipe_Activity extends AppCompatActivity {
 
         sharedPreferences=this.getSharedPreferences("MyPrefs",0);
         Integer userid = sharedPreferences.getInt("id",-1);
-        Toast.makeText(this, userid.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, userid.toString(), Toast.LENGTH_SHORT).show();
         User loggedUser=dbh.getUserById(userid);
 
         ImageButton  back_button=findViewById(R.id.back_button);
         Intent intent = getIntent();
+
+        //load up likes or dislikes
+        if (dbh.isPostLikedByUser(65,1))
+        {
+            Toast.makeText(this, "liked", Toast.LENGTH_SHORT).show();
+
+        }
+        dbh.printTable("LIKES");
 
         Bundle data = intent.getExtras();
         //load UI according to recipe
@@ -114,6 +121,7 @@ public class View_Recipe_Activity extends AppCompatActivity {
                     isLiked = true;
                     like_button.setImageDrawable(getResources().getDrawable(R.drawable.like_color_icon));
                     increaseLikes(1);
+                    dbh.LikePost(64,1);
 
                 } else if (!isLiked ) {
                     isLiked = true;
