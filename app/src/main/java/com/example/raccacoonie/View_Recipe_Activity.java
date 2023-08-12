@@ -74,14 +74,11 @@ public class View_Recipe_Activity extends AppCompatActivity {
         Intent intent = getIntent();
 
         //load up likes or dislikes
-        if (dbh.isPostLikedByUser(65,1))
-        {
-            Toast.makeText(this, "liked", Toast.LENGTH_SHORT).show();
 
-        }
-        dbh.printTable("LIKES");
+
 
         Bundle data = intent.getExtras();
+        int post_id = data.getInt("rec_id");
         //load UI according to recipe
         if(data != null)
         {
@@ -117,11 +114,13 @@ public class View_Recipe_Activity extends AppCompatActivity {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
+                Log.d("USER",String.valueOf(userid));
+                Log.d("RECIPE",String.valueOf(post_id));
                 if (!isLiked && !isDisliked) {
                     isLiked = true;
                     like_button.setImageDrawable(getResources().getDrawable(R.drawable.like_color_icon));
                     increaseLikes(1);
-                    dbh.LikePost(64,1);
+                    dbh.LikePost(post_id,userid);
 
                 } else if (!isLiked ) {
                     isLiked = true;
@@ -130,24 +129,29 @@ public class View_Recipe_Activity extends AppCompatActivity {
                     dislike_button.setImageDrawable(getResources().getDrawable(R.drawable.dislike_icon));
                     increaseLikes(1);
                     increaseDislikes(-1);
+                    dbh.LikePost(post_id,userid);
+                    dbh.removeDislikeFromPost(post_id,userid);
 
                 }else{
                     isLiked=false;
                     like_button.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
                     increaseLikes(-1);
+                    dbh.unlikePost(post_id,userid);
 
                 }
-               // updateLikeStatus();
             }
         });
         dislike_button.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
+                Log.d("USER",String.valueOf(userid));
+                Log.d("RECIPE",String.valueOf(post_id));
                 if (!isDisliked && !isLiked) {
                     isDisliked = true;
                     dislike_button.setImageDrawable(getResources().getDrawable(R.drawable.dislike_color_icon));
                     increaseDislikes(1);
+                    dbh.dislikePost(post_id,userid);
 
                 } else if (!isDisliked ) {
                     isDisliked = true;
@@ -156,16 +160,26 @@ public class View_Recipe_Activity extends AppCompatActivity {
                     like_button.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
                     increaseDislikes(1);
                     increaseLikes(-1);
+                    dbh.unlikePost(post_id,userid);
+                    dbh.dislikePost(post_id,userid);
 
                 }else{
                     isDisliked=false;
                     dislike_button.setImageDrawable(getResources().getDrawable(R.drawable.dislike_icon));
                     increaseDislikes(-1);
+                    dbh.removeDislikeFromPost(post_id,userid);
 
                 }
                // updateLikeStatus();
             }
         });
+        if(dbh.isPostLikedByUser(post_id,userid))
+        {
+            like_button.performClick();
+        }else if (dbh.isPostDislikedByUser(post_id,userid))
+        {
+            dislike_button.performClick();
+        }
 
         ImageButton save_button = findViewById(R.id.save_button);
         save_button.setOnClickListener(new View.OnClickListener() {

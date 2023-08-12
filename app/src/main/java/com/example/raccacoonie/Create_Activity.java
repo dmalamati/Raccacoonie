@@ -45,8 +45,11 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
 
+
+
        //debug
-        myHandler.printRecipes_db();
+        myHandler.printTable("DISLIKES");
+        Toast.makeText(this,"IT WOOOORKS", Toast.LENGTH_LONG);
 
 
         home_button.setOnClickListener(new View.OnClickListener() {

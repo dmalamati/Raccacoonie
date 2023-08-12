@@ -133,7 +133,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         preloaded = ogrecipes.size();
         for (Recipe rec : ogrecipes)
         {
-            post_id.add(rec.creator_id); //all preloaded recipes get an id form 1 to 6
+            post_id.add(rec.creator_id-10); //all preloaded recipes get an id form 1 to 6
         }
 
         addRecipesFromDatabase(ogrecipes);
@@ -326,9 +326,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     //card position
 
                     int position = getAdapterPosition();
-                    Log.d("DEBUG","Got adapter pos");
                     Intent intent = new Intent(v.getContext(), View_Recipe_Activity.class);
-                    Log.d("DEBUG","LOADED INTENT");
                     //get binding adapter where all the cards are
                     RecyclerView.Adapter adapter = (RecyclerAdapter)getBindingAdapter();
                     Log.d("DEBUG","Got binding adapter");
@@ -344,6 +342,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                         data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[position]);
                     }else
                     {
+                        //TODO fill in user submitted pic
                         data.putInt("Recipe_pic",R.drawable.recipe_image);
                     }
 
@@ -351,6 +350,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     data.putString("Recipe_ingredients",((RecyclerAdapter) adapter).recipes.get(position).getIngredients());
                     data.putInt("likes",((RecyclerAdapter) adapter).recipes.get(position).getLikes());
                     data.putInt("dislikes",((RecyclerAdapter) adapter).recipes.get(position).getDislikes());
+                    data.putInt("rec_id",((RecyclerAdapter) adapter).post_id.get(position));
 
 
                     intent.putExtras(data);

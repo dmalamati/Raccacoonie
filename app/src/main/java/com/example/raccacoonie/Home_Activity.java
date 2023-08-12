@@ -25,7 +25,6 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences=this.getSharedPreferences("MyPrefs",0);
         Integer userid = sharedPreferences.getInt("id",-1);
-        Toast.makeText(this, userid.toString(), Toast.LENGTH_SHORT).show();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         dbh=new DatabaseHandler(this,1);
@@ -40,8 +39,6 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
 //Set my Adapter for the RecyclerView
         adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
-
-
 
         ImageButton home_button= findViewById(R.id.home_button);
         home_button.setOnClickListener(new View.OnClickListener() {

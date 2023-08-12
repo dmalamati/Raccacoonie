@@ -65,9 +65,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 "PRIMARY KEY (user_id,post_id)\n" +
                 ");");
 
+        db.execSQL("CREATE TABLE DISLIKES(\n" +
+                "user_id NUMERIC,\n" +
+                "post_id NUMERIC,\n" +
+                "PRIMARY KEY (user_id,post_id)\n" +
+                ");");
+
 
         db.execSQL("INSERT INTO USER VALUES('pavlidvg.csd.auth.gr','pavlidvg','testpass123',1)");
         db.execSQL("INSERT INTO USER VALUES('dmalamati.csd.auth.gr','dmalamati','test123',2)");
+
 
 
     }
@@ -78,21 +85,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Create tables again
         onCreate(db);
     }
-    /*public boolean checkUsername(String username)
-    { return true;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM USER WHERE username = ?",new String[] {username});
-        if(cursor.getCount()>=1) {
-            return true;
-        } else {
-            return  false;
-        }*/
 
     public boolean  checkPassword(String user,String pass)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        //String query = "SELECT * FROM USER WHERE username = ? AND password = ?";
-        //String[] selectionArgs = {user, pass};
 
         //Cursor cursor = db.rawQuery(query, selectionArgs);
         Cursor cursor = db.rawQuery("SELECT * FROM USER",null);
@@ -180,6 +176,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return false;
     }
+    public boolean isPostDislikedByUser(int post_id,int user_id)
+    {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        Cursor query = db.rawQuery("SELECT * FROM DISLIKES WHERE post_id = ? AND user_id = ? ",arguments);
+
+        if (query.getCount()> 0 )
+        {
+            return true;
+        }
+        return false;
+    }
     public void LikePost(int post_id, int user_id)
     {
 
@@ -194,6 +204,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         like.put("user_id",arguments[1]);
         db.insert("LIKES",null,like);
     }
+
+    public void dislikePost(int post_id, int user_id)
+    {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (isPostDislikedByUser(post_id,user_id))
+        {
+            return;
+        }
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        ContentValues like = new ContentValues();
+        like.put("post_id",arguments[0]);
+        like.put("user_id",arguments[1]);
+        db.insert("DISLIKES",null,like);
+    }
     public void unlikePost(int post_id, int user_id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -201,6 +226,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (isPostLikedByUser(post_id,user_id))
         {
             db.execSQL("DELETE FROM LIKES WHERE post_id = ? AND user_id = ?",arguments);
+        }
+
+    }
+    public void removeDislikeFromPost(int post_id, int user_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        if (isPostLikedByUser(post_id,user_id))
+        {
+            db.execSQL("DELETE FROM DISLIKES WHERE post_id = ? AND user_id = ?",arguments);
         }
 
     }
@@ -300,7 +335,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void printTable(String table_name)
     {
-        Log.d("USERS","-----");
+        Log.d(table_name,"-----");
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s",table_name),null);
         if (cursor != null && cursor.moveToFirst()) {
@@ -311,9 +346,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     String columnValue = cursor.getString(i);
                     sb.append(columnName).append(": ").append(columnValue).append(", ");
                 }
-                Log.d("USERS", sb.toString());
+                Log.d("ROW", sb.toString());
             } while (cursor.moveToNext());}
-        Log.d("USERS","-----");
+        Log.d(table_name,"-----");
     }
 
     public  Cursor getRecipes(int count)
@@ -353,18 +388,4 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return id;
     }
-
-
-
-
-
-/*"CREATE TABLE RECIPE (\n" +
-                        "    _id          INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                        "    title       TEXT    NOT NULL,\n" +
-                        "    dietaryStatus     INTEGER DEFAULT (0),\n" +
-                        "    picture TEXT,\n" +
-                        "    execution   TEXT    DEFAULT 'none_provided'," +
-                        "    ingredients TEXT DEFAULT 'none provided'," +
-                "    creator_id     INTEGER," +
-                        "category    TEXT"+");\n"*/
 }
