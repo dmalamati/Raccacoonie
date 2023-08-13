@@ -3,6 +3,7 @@ package com.example.raccacoonie;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 
 public class Create_Activity extends AppCompatActivity implements RecyclerViewInterface{
 
-    int TEMP_CREATOR_ID = 2; //
+    int TEMP_CREATOR_ID = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +42,10 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
         DatabaseHandler myHandler = new DatabaseHandler(this,1);
         RecyclerAdapter adapter=new RecyclerAdapter(this,this);
 
+        SharedPreferences prefs = getSharedPreferences("MyPrefs",0);
+        int creator_id = prefs.getInt("id",-1);
 
 
-
-
-
-
-       //debug
-        myHandler.printTable("DISLIKES");
-        Toast.makeText(this,"IT WOOOORKS", Toast.LENGTH_LONG);
 
 
         home_button.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +98,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
             @Override
             public void onClick(View view) {
 
+
                 if (ingredients.getText().length() == 0 || recipe_title.getText().length()==0|| execution.getText().length()==0)
                 {
 
@@ -144,19 +141,22 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
                        category = "Drink";
                    }
 
-                   //myHandler.printRecipes_db();
-
-                   Recipe user_recipe = new Recipe(-1,recipe_title_str,"nullpic",execution_str,ingredients_str,category,dietaryStatus, country_str);
+                    Log.d("CREATOR ID TRANSMITTED TO THE ADAPTER", String.valueOf(creator_id));
+                   Recipe user_recipe = new Recipe(creator_id,recipe_title_str,"nullpic",execution_str,ingredients_str,category,dietaryStatus, country_str);
                    //todo: add pictures, for now "nullpic" works fine
+                    Log.d("ID FROM RECIPE",String.valueOf(user_recipe.creator_id));
+                    Log.d("ID FROM RECIPE GETTER",String.valueOf(user_recipe.getCreator_id()));
 
 
                     //backend for recipe input
 
                     int recipe_id = submitRecipe(user_recipe,myHandler);
+                    Log.d("ID FROM RECIPE",String.valueOf(user_recipe.creator_id));
+                    Log.d("ID FROM RECIPE GETTER",String.valueOf(user_recipe.getCreator_id()));
 
                    adapter.ogrecipes.add(user_recipe);
+                   Log.d("CREATOR ID PASSED",String.valueOf(adapter.ogrecipes.get(adapter.ogrecipes.size()-1).creator_id));
                    adapter.post_id.add(recipe_id);
-                    Toast.makeText(Create_Activity.this, String.valueOf(recipe_id), Toast.LENGTH_SHORT).show();
                    adapter.notifyItemInserted(adapter.getItemCount()-1);
 
 

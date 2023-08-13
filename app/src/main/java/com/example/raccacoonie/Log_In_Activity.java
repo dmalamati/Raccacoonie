@@ -35,6 +35,7 @@ public class Log_In_Activity extends AppCompatActivity {
                     Log.d("TEST","CLICKED LOGIN");
                     String user=username.getText().toString();
                     String pass=password.getText().toString();
+                    dbh.printTable("USER");
 
 
                 if (dbh.checkPassword(user,pass))
@@ -43,11 +44,13 @@ public class Log_In_Activity extends AppCompatActivity {
                     //startActivity(loadHomeActivity);
                     //Toast.makeText(Log_In_Activity.this, "Hello "+user, Toast.LENGTH_SHORT).show();
                    Intent loadHomeActivity= new Intent(Log_In_Activity.this,Home_Activity.class);
+                   Toast.makeText(getApplicationContext(),"Welcome!", Toast.LENGTH_SHORT);
                     if (sharedPreferences != null) {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("id", dbh.getid(user));
                         editor.apply();
                     } else {
+
                         // Handle the case when the shared preferences object is null
                         Log.d("error","its null");
                         // Log an error or take appropriate action

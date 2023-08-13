@@ -64,6 +64,7 @@ public class View_Recipe_Activity extends AppCompatActivity {
         TextView desc = findViewById(R.id.textView_description);
         TextView title = findViewById(R.id.textView_title);
         ImageView recipe_img = findViewById(R.id.imageView_recipe_image);
+        TextView creatorName = findViewById(R.id.textView_profile_username);
 
         sharedPreferences=this.getSharedPreferences("MyPrefs",0);
         Integer userid = sharedPreferences.getInt("id",-1);
@@ -96,6 +97,7 @@ public class View_Recipe_Activity extends AppCompatActivity {
             TextView shown_dislikes = findViewById(R.id.textView_dislike_number);
             shown_likes.setText(String.valueOf(data.getInt("likes")));
             shown_dislikes.setText(String.valueOf(data.getInt("dislikes")));
+            creatorName.setText(dbh.getUsernameById(data.getInt("creator_id")));
 
             desc.setText(recipe_view.toString());
         }

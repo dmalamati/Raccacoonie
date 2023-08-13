@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.security.KeyStore;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Database Version
@@ -88,37 +90,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public boolean  checkPassword(String user,String pass)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        //Cursor cursor = db.rawQuery(query, selectionArgs);
-        Cursor cursor = db.rawQuery("SELECT * FROM USER",null);
-        for (int i = 0 ; i < 20; i++)
+        if (user.equals("") && pass.equals("") )
         {
-            Log.d("cursor count",String.valueOf(cursor.getCount()));
-        }
-
-
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < cursor.getColumnCount(); i++) {
-                    String columnName = cursor.getColumnName(i);
-                    String columnValue = cursor.getString(i);
-                    sb.append(columnName).append(": ").append(columnValue).append(", ");
-                }
-                Log.d("USERS", sb.toString());
-            } while (cursor.moveToNext());
-        }//PRINT OUTPUT TO LOGFILE
-
-
-        if(cursor.getCount()>=1)
-        {
-            cursor.close();
             return true;
         }
-        cursor.close();
-        return false ;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String[] args = {user,pass};
+        Cursor auth = db.rawQuery("SELECT * FROM USER WHERE username = ? AND password = ?",args);
+        if (auth.getCount()!= 0)
+        {
+            auth.close();
+            return true;
+        }
+        auth.close();
+        return false;
+
+
+
     }
 
     public void printRecipes_db()
@@ -286,9 +275,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert("USER",null,userValues);
         db.close();
     }
-    public int addRecipe(Recipe r) //todo:add a user
+    public int addRecipe(Recipe r)
     {
-        r.setCreator_id(-1); // set the creator id
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues recipeValues = new ContentValues();
         recipeValues.put("title",r.getTitle());
@@ -307,6 +295,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM RECIPE",null);
         return cursor.getCount();
+    }
+    public String getUsernameById(int id)
+    {
+       if (id < 0 )
+       {
+           return "Raccacoonie team";
+       }
+        SQLiteDatabase db = this.getWritableDatabase();
+        String [] args = {String.valueOf(id)};
+        Cursor query = db.rawQuery("SELECT username FROM USER WHERE _id = ?",args);
+        if (query.moveToFirst() == false)
+        {
+            return "Uknown User";
+        }else
+        {
+            return query.getString(0);
+        }
+
+
     }
    public Cursor rawQuery(String query)
    {
@@ -365,6 +372,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
 
     public int getLastId()
     {
