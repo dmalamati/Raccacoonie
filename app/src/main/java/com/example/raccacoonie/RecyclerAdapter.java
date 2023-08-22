@@ -35,7 +35,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private final int[] images = { R.drawable.recipe_0, R.drawable.recipe_image, R.drawable.recipe_image, R.drawable.recipe_image, R.drawable.recipe_image,
             R.drawable.recipe_image, R.drawable.recipe_image, R.drawable.recipe_image };
 
-    private final int[] recipeDrawables = {
+      int[] recipeDrawables = {
             R.drawable.recipe_0,
             R.drawable.recipe_1,
             R.drawable.recipe_2,
@@ -185,6 +185,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             } while (cursor.moveToNext());}
         //ogrecipes.add(new Recipe(-2,"test title","nullpic","test exec","test ingredients","snack",2,"Greece"));
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Recipe> getOgrecipes()
+    {
+        return ogrecipes;
     }
 
     public void addNewRecipeToView(int count)
@@ -343,8 +348,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     Bundle data = new Bundle();
                     Log.d("DEBUG","DATALOADED");
                     //FILL RECIPE DATA ON BUNDLE TO GIVE TO THE ACTIVITY
-                    data.putString("Rec_title",((RecyclerAdapter) adapter).recipes.get(position).title);
-                    data.putString("Recipe_execution",((RecyclerAdapter) adapter).recipes.get(position).getExecution());
+                    data.putString("Rec_title",((RecyclerAdapter) adapter).ogrecipes.get(position).title);
+                    data.putString("Recipe_execution",((RecyclerAdapter) adapter).ogrecipes.get(position).getExecution());
                     if (position < ((RecyclerAdapter) adapter).preloaded)
                     {
 
@@ -356,9 +361,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
 
 
-                    data.putString("Recipe_ingredients",((RecyclerAdapter) adapter).recipes.get(position).getIngredients());
-                    data.putInt("likes",((RecyclerAdapter) adapter).recipes.get(position).getLikes());
-                    data.putInt("dislikes",((RecyclerAdapter) adapter).recipes.get(position).getDislikes());
+                    data.putString("Recipe_ingredients",((RecyclerAdapter) adapter).ogrecipes.get(position).getIngredients());
+                    data.putInt("likes",((RecyclerAdapter) adapter).ogrecipes.get(position).getLikes());
+                    data.putInt("dislikes",((RecyclerAdapter) adapter).ogrecipes.get(position).getDislikes());
                     data.putInt("rec_id",((RecyclerAdapter) adapter).post_id.get(position));
                     data.putInt("creator_id",((RecyclerAdapter) adapter).ogrecipes.get(position).creator_id);
                     Log.d("CREATOR ID",String.valueOf(((RecyclerAdapter) adapter).ogrecipes.get(position).getCreator_id()));

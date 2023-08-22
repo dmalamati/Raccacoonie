@@ -41,7 +41,6 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
         DatabaseHandler myHandler = new DatabaseHandler(this,1);
         RecyclerAdapter adapter=new RecyclerAdapter(this,this);
-
         SharedPreferences prefs = getSharedPreferences("MyPrefs",0);
         int creator_id = prefs.getInt("id",-1);
 

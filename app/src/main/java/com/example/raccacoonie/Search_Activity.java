@@ -49,6 +49,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
 
+
         ImageButton filters_button= findViewById(R.id.button_filters);
         filters_button.setOnClickListener(new View.OnClickListener() {
             @Override

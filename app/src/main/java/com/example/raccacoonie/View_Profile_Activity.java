@@ -10,11 +10,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class View_Profile_Activity extends AppCompatActivity implements RecyclerViewInterface {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
+    //RecyclerView.Adapter<RecyclerAdapter.ViewHolder> adapter;
+    RecyclerAdapter adapter;
 
 
     @Override
@@ -32,8 +35,27 @@ public class View_Profile_Activity extends AppCompatActivity implements Recycler
         adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
 
+
+        RecyclerAdapter my_adapter = new RecyclerAdapter(this,this);
+
+        //GET CREATED RECIPES ONLY
+        //backups
+        ArrayList<Recipe> backup_recipe = new ArrayList<>(my_adapter.ogrecipes);
+        ArrayList<Integer> backup_likes = new ArrayList<>(my_adapter.likes);
+        ArrayList<Integer> backup_dislikes = new ArrayList<>(my_adapter.dislikes);
+        int [] backup_drawables = my_adapter.recipeDrawables.clone();
+
+        //changing the adapter
+
+        my_adapter.ogrecipes.remove(0);
+        my_adapter.likes.remove(0);
+        my_adapter.dislikes.remove(0);
+        my_adapter.notifyDataSetChanged();
+
+
         //UI
         TextView username_text = findViewById(R.id.textView_View_Username);
+
 
         //set UI
         SharedPreferences  sharedPreferences=this.getSharedPreferences("MyPrefs",0);
