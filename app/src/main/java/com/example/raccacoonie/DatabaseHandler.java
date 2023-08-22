@@ -93,6 +93,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (user.equals("") && pass.equals("") )
         {
             return true;
+            //TODO: DELETE IN FINAL BUILD
         }
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -344,6 +345,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     {
         Log.d(table_name,"-----");
         SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS LIKES(\n" +
+                "user_id NUMERIC,\n" +
+                "post_id NUMERIC,\n" +
+                "PRIMARY KEY (user_id,post_id)\n" +
+                ");");
+
+        db.execSQL("CREATE TABLE  IF NOT EXISTS DISLIKES(\n" +
+                "user_id NUMERIC,\n" +
+                "post_id NUMERIC,\n" +
+                "PRIMARY KEY (user_id,post_id)\n" +
+                ");");
         Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s",table_name),null);
         if (cursor != null && cursor.moveToFirst()) {
             do {

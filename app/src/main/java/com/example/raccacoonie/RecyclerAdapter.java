@@ -178,7 +178,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     sb.append(columnName).append(": ").append(columnValue).append(", ");
                 }
                 Log.d("Recipe", sb.toString());
-                Recipe new_recipe = new Recipe(creator_id,cursor.getString(1),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(7),cursor.getInt(2),"Greece"); //ADD RECIPES
+                Recipe new_recipe = new Recipe(cursor.getInt(6),cursor.getString(1),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(7),cursor.getInt(2),"Greece"); //ADD RECIPES
 
                 ogrecipes.add(new_recipe);
                 post_id.add(cursor.getInt(0)); //add the id so the recycler post_id array has access

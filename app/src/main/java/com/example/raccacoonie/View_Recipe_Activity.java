@@ -98,6 +98,8 @@ public class View_Recipe_Activity extends AppCompatActivity {
             shown_likes.setText(String.valueOf(data.getInt("likes")));
             shown_dislikes.setText(String.valueOf(data.getInt("dislikes")));
             creatorName.setText(dbh.getUsernameById(data.getInt("creator_id")));
+            Log.d("CREATOR",String.valueOf(data.getInt("creator_id")));
+            dbh.printTable("USER");
 
             desc.setText(recipe_view.toString());
         }
