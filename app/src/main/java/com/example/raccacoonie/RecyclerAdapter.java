@@ -138,9 +138,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 "Drink", 1, "Greece"));
 
         preloaded = ogrecipes.size();
+        int k = 1;
         for (Recipe rec : ogrecipes)
         {
-            post_id.add(rec.creator_id-10); //all preloaded recipes get an id form 1 to 6
+            post_id.add(k-10);  //all preloaded recipes get an id form -10 to -4
+            k++;
         }
 
         addRecipesFromDatabase(ogrecipes);

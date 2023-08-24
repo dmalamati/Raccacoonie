@@ -38,6 +38,21 @@ public class Saved_Activity extends AppCompatActivity implements RecyclerViewInt
         User loggedUser=dbh.getUserById(userid);
 
 
+        //filter adapter by saved
+        int curr_post_id;
+        for(int i = 0 ; i < adapter.ogrecipes.size();i++)
+        {
+            curr_post_id = adapter.post_id.get(i);
+            if (!dbh.isPostSavedByUser(curr_post_id,userid))
+            {
+                adapter.ogrecipes.remove(i);
+                adapter.post_id.remove(i);
+                i--;
+            }
+        }
+        adapter.notifyDataSetChanged();
+
+
 
 
 
