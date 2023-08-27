@@ -185,7 +185,10 @@ public class View_Recipe_Activity extends AppCompatActivity {
             dislike_button.performClick();
         }
 
+
         ImageButton save_button = findViewById(R.id.save_button);
+
+
         save_button.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
@@ -193,16 +196,27 @@ public class View_Recipe_Activity extends AppCompatActivity {
                 if (!isSaved){
                     isSaved=true;
                     save_button.setImageDrawable(getResources().getDrawable(R.drawable.save_color_icon));
+                    dbh.userSavePost(userid,post_id);
 
 
                 }else{
                     isSaved=false;
+                    Log.d("post id",String.valueOf(post_id));
+                    dbh.printTable("SAVES");
+                    dbh.removeSave(post_id,userid);
+                    Log.d("AFTER","!!!!!!");
+                    dbh.printTable("SAVES");
                     save_button.setImageDrawable(getResources().getDrawable(R.drawable.save_icon));
                 }
                 loggedUser.likedRecipes.add(data.getString("Rec_title"));
                 Toast.makeText(View_Recipe_Activity.this, data.getString("Rec_title"), Toast.LENGTH_SHORT).show();
             }
         });
+        if (dbh.isPostSavedByUser(post_id,userid))
+        {
+            Log.d("yoo","ENTERED TH IF STATEMENT");
+            save_button.performClick();
+        }
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

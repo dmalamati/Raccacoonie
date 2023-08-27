@@ -60,13 +60,21 @@ public class Profile_Activity extends AppCompatActivity implements RecyclerViewI
 
             curr_creator_id = my_adapter.ogrecipes.get(i).creator_id;
             Log.d("Current Rcipe",String.valueOf(curr_creator_id));
+/*
             Log.d("title",my_adapter.ogrecipes.get(i).title);
+            Log.d("sizeof recipes",String.valueOf(my_adapter.ogrecipes.size()));
+            Log.d("sizeof likes",String.valueOf(my_adapter.likes.size()));
+            Log.d("sizeof likes",String.valueOf(my_adapter.dislikes.size()));
             Log.d("debug","---");
+            */
+
+
             if (curr_creator_id != userid)
             {
                 my_adapter.ogrecipes.remove(i);
-                my_adapter.likes.remove(i);
-                my_adapter.dislikes.remove(i);
+                my_adapter.post_id.remove(i);
+                //my_adapter.likes.remove(i);
+                //my_adapter.dislikes.remove(i);
                 i--;
             }
         }

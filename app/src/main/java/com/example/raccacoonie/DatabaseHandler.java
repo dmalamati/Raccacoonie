@@ -33,7 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create table query
-        db.execSQL("DROP TABLE IF EXISTS RECIPE");
+
         db.execSQL("CREATE TABLE USER (\n" +
                 "    email      TEXT    NOT NULL\n" +
                 "                       UNIQUE,\n" +
@@ -62,6 +62,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 ");\n");
 
         db.execSQL("CREATE TABLE LIKES(\n" +
+                "user_id NUMERIC,\n" +
+                "post_id NUMERIC,\n" +
+                "PRIMARY KEY (user_id,post_id)\n" +
+                ");");
+        db.execSQL("CREATE TABLE SAVES(\n" +
                 "user_id NUMERIC,\n" +
                 "post_id NUMERIC,\n" +
                 "PRIMARY KEY (user_id,post_id)\n" +
@@ -154,7 +159,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public boolean isPostLikedByUser(int post_id, int user_id)
     {
-
+        Log.d("post",String.valueOf(post_id));
+        Log.d("user",String.valueOf(user_id));
         SQLiteDatabase db = this.getWritableDatabase();
 
         String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
@@ -162,8 +168,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (query.getCount()> 0 )
         {
+           Log.d("debug","Found");
             return true;
         }
+        Log.d("debug","Not Found");
         return false;
     }
     public boolean isPostDislikedByUser(int post_id,int user_id)
@@ -340,6 +348,53 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return "nope";
     }
+    public boolean isPostSavedByUser(int post_id,int user_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        Cursor query = db.rawQuery("SELECT * FROM SAVES WHERE post_id = ? AND user_id = ? ",arguments);
+
+        if (query.getCount()> 0 )
+        {
+            Log.d("CHECK","POST ALREADY SAVED");
+            return true;
+        }
+        Log.d("CHECK","POST NOT SAVED");
+        return false;
+    }
+
+    public void removeSave(int post_id,int user_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        if (isPostSavedByUser(post_id,user_id))
+        {
+            Log.d("DEBUG","POST WAS SQL SAVED");
+            db.execSQL("DELETE FROM SAVES WHERE post_id = ? AND user_id = ?",arguments);
+        }
+    }
+
+
+
+    public void userSavePost(int user_id,int post_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (isPostSavedByUser(post_id,user_id))
+        {
+            Log.d("DEBUG","POST WAS NTO DOULBE SAVED");
+            return;
+        }
+        Log.d("DEBUG","will now be saved");
+        String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
+        ContentValues like = new ContentValues();
+        like.put("post_id",arguments[0]);
+        like.put("user_id",arguments[1]);
+        db.insert("SAVES",null,like);
+
+
+
+    }
 
     public void printTable(String table_name)
     {
@@ -353,6 +408,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 ");");
 
         db.execSQL("CREATE TABLE  IF NOT EXISTS DISLIKES(\n" +
+                "user_id NUMERIC,\n" +
+                "post_id NUMERIC,\n" +
+                "PRIMARY KEY (user_id,post_id)\n" +
+                ");");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS SAVES(\n" +
                 "user_id NUMERIC,\n" +
                 "post_id NUMERIC,\n" +
                 "PRIMARY KEY (user_id,post_id)\n" +
