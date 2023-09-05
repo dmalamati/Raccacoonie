@@ -209,7 +209,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
         });
-        id_post=adapter.post_id.size()+1;
+        id_post=adapter.post_id.get(adapter.post_id.size()-1)+1;
 
     }
     @Override
@@ -220,6 +220,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
             saveImageToAppDirectory(imageUri,id_post);
+            loadBitmapFromInternalStorage(this, String.valueOf(id_post));
 
 
 

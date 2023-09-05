@@ -73,6 +73,7 @@ public class Profile_Activity extends AppCompatActivity implements RecyclerViewI
             {
                 my_adapter.ogrecipes.remove(i);
                 my_adapter.post_id.remove(i);
+                my_adapter.drawables_list.remove(i);
                 //my_adapter.likes.remove(i);
                 //my_adapter.dislikes.remove(i);
                 i--;

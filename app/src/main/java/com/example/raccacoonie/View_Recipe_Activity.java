@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -85,7 +87,15 @@ public class View_Recipe_Activity extends AppCompatActivity {
         {
 
             title.setText(data.getString("Rec_title"));
-            recipe_img.setImageResource(data.getInt("Recipe_pic"));
+            if (data.getBoolean("customPic"))
+            {
+                Bitmap bmp = Create_Activity.loadBitmapFromInternalStorage(this,String.valueOf(data.getInt("Recipe_pic")));
+                recipe_img.setImageBitmap(bmp);
+            }else
+            {
+                recipe_img.setImageResource(data.getInt("Recipe_pic"));
+            }
+
             StringBuilder recipe_view = new StringBuilder();
             recipe_view.append("Ingredients:\n");
             recipe_view.append(data.getString("Recipe_ingredients"));
@@ -99,7 +109,6 @@ public class View_Recipe_Activity extends AppCompatActivity {
             shown_dislikes.setText(String.valueOf(data.getInt("dislikes")));
             creatorName.setText(dbh.getUsernameById(data.getInt("creator_id")));
             Log.d("CREATOR",String.valueOf(data.getInt("creator_id")));
-            dbh.printTable("USER");
 
             desc.setText(recipe_view.toString());
         }
@@ -201,15 +210,13 @@ public class View_Recipe_Activity extends AppCompatActivity {
 
                 }else{
                     isSaved=false;
-                    Log.d("post id",String.valueOf(post_id));
-                    dbh.printTable("SAVES");
                     dbh.removeSave(post_id,userid);
                     Log.d("AFTER","!!!!!!");
                     dbh.printTable("SAVES");
                     save_button.setImageDrawable(getResources().getDrawable(R.drawable.save_icon));
                 }
                 loggedUser.likedRecipes.add(data.getString("Rec_title"));
-                Toast.makeText(View_Recipe_Activity.this, data.getString("Rec_title"), Toast.LENGTH_SHORT).show();
+
             }
         });
         if (dbh.isPostSavedByUser(post_id,userid))

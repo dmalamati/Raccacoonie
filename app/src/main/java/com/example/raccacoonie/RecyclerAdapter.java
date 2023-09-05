@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,6 +46,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             R.drawable.recipe_4,
             R.drawable.recipe_5
     };
+      ArrayList<Integer> drawables_list = new ArrayList<>();
+      ArrayList<Bitmap> bitmap_list = new ArrayList<>();
     ArrayList<Recipe> recipes = new ArrayList<>();
     ArrayList<Recipe>ogrecipes=new ArrayList<>();
     ArrayList<Integer> drawables_filter = new ArrayList<>();
@@ -62,8 +67,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public RecyclerAdapter(RecyclerViewInterface recyclerViewInterface,Context context) {
         this.recyclerViewInterface = recyclerViewInterface;
         this.context = context;
+        for (int a : recipeDrawables)
+        {
+            drawables_list.add(a);
+        }
         fillPics();
         fillRecipeList();
+
 
         recipes.addAll(ogrecipes);
         for (Integer pic: recipeDrawables)
@@ -184,6 +194,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
                 ogrecipes.add(new_recipe);
                 post_id.add(cursor.getInt(0)); //add the id so the recycler post_id array has access
+
+                drawables_list.add(R.drawable.recipe_image);
+
+
             } while (cursor.moveToNext());}
         //ogrecipes.add(new Recipe(-2,"test title","nullpic","test exec","test ingredients","snack",2,"Greece"));
         notifyDataSetChanged();
@@ -345,21 +359,33 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     Intent intent = new Intent(v.getContext(), View_Recipe_Activity.class);
                     //get binding adapter where all the cards are
                     RecyclerView.Adapter adapter = (RecyclerAdapter)getBindingAdapter();
-                    Log.d("DEBUG","Got binding adapter");
 
                     Bundle data = new Bundle();
-                    Log.d("DEBUG","DATALOADED");
+
                     //FILL RECIPE DATA ON BUNDLE TO GIVE TO THE ACTIVITY
                     data.putString("Rec_title",((RecyclerAdapter) adapter).ogrecipes.get(position).title);
                     data.putString("Recipe_execution",((RecyclerAdapter) adapter).ogrecipes.get(position).getExecution());
-                    if (position < ((RecyclerAdapter) adapter).preloaded)
+                    Bitmap bitmap_preloaded = Create_Activity.loadBitmapFromInternalStorage(((RecyclerAdapter) adapter).context, "recipe_"+String.valueOf(((RecyclerAdapter) adapter).post_id.get(position)+9)+".jpg");
+                    if (((RecyclerAdapter) adapter).post_id.get(position)<0)//position < ((RecyclerAdapter) adapter).preloaded)
                     {
 
-                        data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[position]);
+                        data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[((RecyclerAdapter) adapter).post_id.get(position)+9]);
+
                     }else
                     {
-                        //TODO fill in user submitted pic
-                        data.putInt("Recipe_pic",R.drawable.recipe_image);
+                        Bitmap bitmap = Create_Activity.loadBitmapFromInternalStorage(((RecyclerAdapter) adapter).context, String.valueOf(((RecyclerAdapter) adapter).post_id.get(position)));
+                        if (bitmap!=null)
+                        {
+                          data.putBoolean("customPic",true);
+
+                          data.putInt("Recipe_pic",((RecyclerAdapter) adapter).post_id.get(position));
+
+                        }else {
+                            data.putInt("Recipe_pic",R.drawable.recipe_image);
+
+                        }
+
+
                     }
 
 
@@ -419,13 +445,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.itemTitle.setText(ogrecipes.get(position).title);
-        if (position < recipeDrawables.length)
+        /*if (position < recipeDrawables.length)
         {
-            holder.itemImage.setImageResource(recipeDrawables[position]);
+            holder.itemImage.setImageResource(drawables_list.get(position));
         }else
         {
             holder.itemImage.setImageResource(R.drawable.recipe_image);
+        }*/
+        Bitmap bitmap = Create_Activity.loadBitmapFromInternalStorage(this.context,String.valueOf(post_id.get(position)));
+        if (bitmap!=null)
+        {
+            holder.itemImage.setImageBitmap(bitmap);
+
+        }else {
+            Log.d("PROBLEM","GOT NULL BITMAP");
+            holder.itemImage.setImageResource(drawables_list.get(position));
         }
+
+
 
         //MIN PEIRAKSEI KANEIS TO PANO, EIMAI POLI EKSIPNOS POU TO SKEFTIKA
     }
@@ -451,9 +488,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             cursor.close();
         }
 
-        for (int i = 0 ; i < titleList.size(); i++)
-        {
-            Log.d("TEST",titleList.get(i));
-        }
     }
 }

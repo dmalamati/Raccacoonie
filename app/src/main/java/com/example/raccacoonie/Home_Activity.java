@@ -49,7 +49,7 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
             }
         });
         //DEBUG
-        dbh.printTable("SAVES");
+
 
         ImageButton search_button= findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {

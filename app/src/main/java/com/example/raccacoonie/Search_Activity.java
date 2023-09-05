@@ -25,6 +25,11 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Search_Activity extends AppCompatActivity implements RecyclerViewInterface{
 
     RecyclerView recyclerView;
@@ -128,6 +133,117 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 
                 dialog.dismiss();
                 adapter.updateRecipes(category,tag,ingredients,country);
+
+
+                //Filtering
+                //adapter.post_id.remove(i);
+                //                adapter.drawables_list.remove(i);
+
+                ArrayList<Recipe> backup_rec = new ArrayList<>(adapter.ogrecipes);
+                ArrayList<Integer> backup_post_id = new ArrayList<>(adapter.post_id);
+                ArrayList<Integer> backup_drawbles = new ArrayList<>(adapter.drawables_list);
+                Map<String,Integer> types=new HashMap<>();
+                adapter.ogrecipes.clear();
+
+                types.put("Pescetarian",1);
+                types.put("Vegetarian",2);
+                types.put("Vegan",3);
+                types.put("Tag",0);
+
+
+                String [] filter_ingredients=ingredients.split(",");
+                for (int i = 0; i < filter_ingredients.length; i++) {
+                    filter_ingredients[i] = filter_ingredients[i].trim();
+                }
+                int pos = 0;
+
+                for (Recipe recipe : backup_rec) {
+
+
+               /*if ( (category.equals(recipe.category) || types.get(tag)==recipe.dietaryStatus)|| similarity>=2||country.equals(recipe.country)) {
+                    recipes.add(recipe);
+                }*/
+
+                    if (category.equals("Category")) {
+                        if (tag.equals("Tag")) {
+                            if (country.equals(""))
+                                Log.d("debug","null");
+                            else {
+                                if (recipe.country.equals((country))){
+                                    adapter.ogrecipes.add(recipe);
+                                    adapter.post_id.add(backup_post_id.get(pos));
+                                    adapter.drawables_list.add(backup_drawbles.get(pos));
+                                }
+                            }
+                        } else {
+                            if (country.equals("")) {
+                                if (types.get(tag) == recipe.dietaryStatus) {
+                                    adapter.ogrecipes.add(recipe);
+                                }
+                            } else {
+                                if (types.get(tag) == recipe.dietaryStatus && recipe.country.equals(country)) {
+                                    adapter.ogrecipes.add(recipe);
+                                }
+                            }
+                        }
+
+                    } else {
+                        if (tag.equals("Tag")) {
+                            if (country.equals("")) {
+                                if (recipe.category.equals(category)) {
+                                    adapter.ogrecipes.add(recipe);
+                                }
+                            } else {
+                                if (recipe.country.equals((country)) && recipe.category.equals(category)) {
+                                    adapter.ogrecipes.add(recipe);
+                                }
+                            }
+                        } else {
+                            if (country.equals("")) {
+                                if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category)) {
+                                    adapter.ogrecipes.add(recipe);
+                                }
+                            } else {
+                                if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category) && recipe.country.equals(country)) {
+                                    adapter.ogrecipes.add(recipe);
+                                }
+                            }
+                        }
+                    }
+
+
+                    if (ingredients.length()>0)
+                    {
+
+
+                        int similarity = 0;
+                        String[] recipe_ingredients = recipe.ingredients.split(",");
+                        for (int i = 0; i < recipe_ingredients.length; i++) {
+                            recipe_ingredients[i] = recipe_ingredients[i].trim();
+                        }
+
+                        for (String word : filter_ingredients) {
+                            if (Arrays.asList(recipe_ingredients).contains(word)) {
+                                similarity++;
+                            }
+                        }
+                        if (similarity==0)
+                        {
+                            adapter.ogrecipes.remove(recipe);
+                        }
+                        else
+                        {
+                            adapter.ogrecipes.add(recipe);
+                        }
+                        pos++;
+                    }}
+
+
+
+
+                adapter.notifyDataSetChanged();
+
+                //END FILTERING
             }
         });
         Button clearbtn=dialog.findViewById(R.id.button_clear_filters);

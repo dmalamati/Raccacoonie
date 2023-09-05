@@ -47,6 +47,7 @@ public class Saved_Activity extends AppCompatActivity implements RecyclerViewInt
             {
                 adapter.ogrecipes.remove(i);
                 adapter.post_id.remove(i);
+                adapter.drawables_list.remove(i);
                 i--;
             }
         }
