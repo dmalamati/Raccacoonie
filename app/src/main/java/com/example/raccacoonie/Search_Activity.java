@@ -53,7 +53,14 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
 
-
+        ImageButton log_out_button= findViewById(R.id.log_out_button);
+        log_out_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loadLogInActivity= new Intent(Search_Activity.this,Log_In_Activity.class);
+                startActivity(loadLogInActivity);
+            }
+        });
 
         ImageButton filters_button= findViewById(R.id.button_filters);
         filters_button.setOnClickListener(new View.OnClickListener() {

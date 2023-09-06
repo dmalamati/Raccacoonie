@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,13 +85,27 @@ public class Profile_Activity extends AppCompatActivity implements RecyclerViewI
         my_adapter.notifyDataSetChanged();
 
         //UI
-        TextView username_text = findViewById(R.id.textView_View_Username);
+        EditText editText_username = findViewById(R.id.editText_username_edit);
+        editText_username.setFocusable(false);
+        EditText editText_email = findViewById(R.id.editText_email_edit);
+        editText_email.setFocusable(false);
 
-        username_text.setText(my_handler.getUsernameById(userid));
+//        TextView username_text = findViewById(R.id.textView_View_Username);
+//        username_text.setText(my_handler.getUsernameById(userid));
 
         ImageButton home_button= findViewById(R.id.home_button);
         TextView recipes_shared = findViewById(R.id.textView_view_number_of_posts);
         recipes_shared.setText(String.valueOf(my_adapter.ogrecipes.size()));
+
+        ImageButton log_out_button= findViewById(R.id.log_out_button);
+        log_out_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loadLogInActivity= new Intent(Profile_Activity.this,Log_In_Activity.class);
+                startActivity(loadLogInActivity);
+            }
+        });
+
         home_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

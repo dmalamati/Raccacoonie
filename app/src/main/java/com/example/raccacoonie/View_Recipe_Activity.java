@@ -113,11 +113,21 @@ public class View_Recipe_Activity extends AppCompatActivity {
             desc.setText(recipe_view.toString());
         }
 
+
+        ImageButton log_out_button= findViewById(R.id.log_out_button);
+        log_out_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loadLogInActivity= new Intent(View_Recipe_Activity.this,Log_In_Activity.class);
+                startActivity(loadLogInActivity);
+            }
+        });
+
         view_profile_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loadViewProfileActivity= new Intent(View_Recipe_Activity.this,View_Profile_Activity.class);
-                startActivity(loadViewProfileActivity);
+                Intent loadProfileActivity= new Intent(View_Recipe_Activity.this,Profile_Activity.class);
+                startActivity(loadProfileActivity);
             }
         });
 

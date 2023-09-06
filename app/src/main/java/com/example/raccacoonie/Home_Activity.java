@@ -50,6 +50,14 @@ public class Home_Activity extends AppCompatActivity implements RecyclerViewInte
         });
         //DEBUG
 
+        ImageButton log_out_button= findViewById(R.id.log_out_button);
+        log_out_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loadLogInActivity= new Intent(Home_Activity.this,Log_In_Activity.class);
+                startActivity(loadLogInActivity);
+            }
+        });
 
         ImageButton search_button= findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {

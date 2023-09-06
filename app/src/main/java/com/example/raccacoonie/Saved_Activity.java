@@ -55,9 +55,14 @@ public class Saved_Activity extends AppCompatActivity implements RecyclerViewInt
 
 
 
-
-
-
+        ImageButton log_out_button= findViewById(R.id.log_out_button);
+        log_out_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loadLogInActivity= new Intent(Saved_Activity.this,Log_In_Activity.class);
+                startActivity(loadLogInActivity);
+            }
+        });
 
         ImageButton home_button= findViewById(R.id.home_button);
         home_button.setOnClickListener(new View.OnClickListener() {

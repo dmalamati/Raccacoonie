@@ -75,8 +75,14 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
          int creator_id = prefs.getInt("id",-1);
 
 
-
-
+        ImageButton log_out_button= findViewById(R.id.log_out_button);
+        log_out_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loadLogInActivity= new Intent(Create_Activity.this,Log_In_Activity.class);
+                startActivity(loadLogInActivity);
+            }
+        });
 
         home_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,13 +92,11 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
             }
         });
 
-
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent loadSearchActivity= new Intent(Create_Activity.this,Search_Activity.class);
                 startActivity(loadSearchActivity);
-
             }
         });
 
@@ -102,7 +106,6 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
             public void onClick(View v) {
                 Intent loadCreateActivity= new Intent(Create_Activity.this,Create_Activity.class);
                 startActivity(loadCreateActivity);
-
             }
         });
 
