@@ -42,15 +42,16 @@
                 android:contentDescription="@string/logo" />
 
             <ImageButton
-                android:id="@+id/option_button"
+                android:id="@+id/log_out_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00FFFFFF"
                 android:clickable="true"
                 android:contentDescription="@string/options"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/options_icon" />
+                app:srcCompat="@drawable/log_out_icon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
