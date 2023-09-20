@@ -184,11 +184,12 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
                     Log.d("ID FROM RECIPE GETTER", String.valueOf(user_recipe.getCreator_id()));
 
                     adapter.ogrecipes.add(user_recipe);
-                    Log.d("CREATOR ID PASSED", String.valueOf(adapter.ogrecipes.get(adapter.ogrecipes.size() - 1).creator_id));
+                    Log.d(" ID PASSED", String.valueOf(recipe_id));
                     adapter.post_id.add(recipe_id);
+                    //Toast.makeText(getApplicationContext(), "ID:"+String.valueOf(recipe_id), Toast.LENGTH_SHORT).show();
                     adapter.notifyItemInserted(adapter.getItemCount() - 1);
 
-                    Log.d("POSTS", String.valueOf(id_post));
+                    id_post=adapter.post_id.get(adapter.post_id.size()-1);
                     PhotoUploadFragment photoUploadFragment = new PhotoUploadFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.bottom_container, photoUploadFragment);
@@ -212,7 +213,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
         });
-        id_post=adapter.post_id.get(adapter.post_id.size()-1)+1;
+
 
     }
     @Override
@@ -258,7 +259,7 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
         try {
             FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            Toast.makeText(this,fileName,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,fileName,Toast.LENGTH_LONG).show();
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
