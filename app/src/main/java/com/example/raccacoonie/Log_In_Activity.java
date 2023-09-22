@@ -62,7 +62,7 @@ public class Log_In_Activity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(Log_In_Activity.this, "WRONG LOGIN", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Log_In_Activity.this, "Wrong username or password. Try making a new account", Toast.LENGTH_SHORT).show();
                 }
                 }
                 //Toast.makeText(Log_In_Activity.this, dbh.checkPassword(user,pass), Toast.LENGTH_SHORT).show();

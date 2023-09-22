@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.security.KeyStore;
 
@@ -295,7 +296,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         recipeValues.put("category",r.getCategory());
         db.insert("RECIPE",null,recipeValues);
         db.close();
-        return recipe_count();
+        return getLastId();
     }
     public int recipe_count()
     {
@@ -468,10 +469,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     {
         Cursor cursor;
         SQLiteDatabase db = this.getWritableDatabase();
-        cursor = db.rawQuery("SELECT * FROM RECIPE ORDER BY _id DESC LIMIT 1",null);
+        cursor = db.rawQuery("SELECT _id FROM RECIPE ORDER BY _id DESC LIMIT 1",null);
         if (cursor.getCount() < 1 )
+        {
             Log.d("GAMO","TIN PANAGIA");
-        return 21;
+            return -1;
+        }
+        cursor.moveToFirst();
+
+
+
+
+        return (int) cursor.getLong(0);
     }
 
     @SuppressLint("Range")

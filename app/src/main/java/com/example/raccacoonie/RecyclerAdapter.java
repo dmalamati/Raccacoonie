@@ -366,14 +366,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     data.putString("Rec_title",((RecyclerAdapter) adapter).ogrecipes.get(position).title);
                     data.putString("Recipe_execution",((RecyclerAdapter) adapter).ogrecipes.get(position).getExecution());
                     Bitmap bitmap_preloaded = Create_Activity.loadBitmapFromInternalStorage(((RecyclerAdapter) adapter).context, "recipe_"+String.valueOf(((RecyclerAdapter) adapter).post_id.get(position)+9)+".jpg");
-                    if (((RecyclerAdapter) adapter).post_id.get(position)<0)//position < ((RecyclerAdapter) adapter).preloaded)
+                    if (((RecyclerAdapter) adapter).post_id.get(position)<-3)//position < ((RecyclerAdapter) adapter).preloaded)
                     {
 
                         data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[((RecyclerAdapter) adapter).post_id.get(position)+9]);
-                        Log.d("Debug","GOT FROM ARRAY");
 
                     }else
                     {
+                        String test =  String.valueOf(((RecyclerAdapter) adapter).post_id.get(position));
+                        Log.d("post id we got",test);
                         Bitmap bitmap = Create_Activity.loadBitmapFromInternalStorage(((RecyclerAdapter) adapter).context, String.valueOf(((RecyclerAdapter) adapter).post_id.get(position)));
                         if (bitmap!=null)
                         {
@@ -446,15 +447,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.itemTitle.setText(ogrecipes.get(position).title);
+        /*if (position < recipeDrawables.length)
+        {
+            holder.itemImage.setImageResource(drawables_list.get(position));
+        }else
+        {
+            holder.itemImage.setImageResource(R.drawable.recipe_image);
+        }*/
+        /*if (position==6)
+        {
+            Bitmap bitmap = Create_Activity.loadBitmapFromInternalStorage(this.context,"-3");
+            return;
+        }*/
         Bitmap bitmap = Create_Activity.loadBitmapFromInternalStorage(this.context,String.valueOf(post_id.get(position)));
+        Log.d("Checking",String.valueOf(post_id.get(position)));
         if (bitmap!=null)
         {
             holder.itemImage.setImageBitmap(bitmap);
+            Log.d("result","BITMAP FOUND");
 
         }else {
             Log.d("PROBLEM","GOT NULL BITMAP");
             holder.itemImage.setImageResource(drawables_list.get(position));
         }
+        Log.d("end","-------");
 
 
 

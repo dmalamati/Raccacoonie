@@ -22,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -51,7 +52,27 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
 
+        SearchView search = findViewById(R.id.search_view);
+        search.setEnabled(true);
+        search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Search_Activity.this, "Search is unavailable. Try our filter dialog instead", Toast.LENGTH_SHORT).show();
+            }
+        });
 
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Toast.makeText(Search_Activity.this, "Search is unavailable. Try our filter dialog instead", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
         //ADAPTER CARD BACKUPS FOR FILTERING
         ArrayList<Recipe> backup_rec = new ArrayList<>(adapter.ogrecipes);
@@ -135,6 +156,9 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         Spinner tagf=dialog.findViewById(R.id.spinner_tag_filter);
         EditText ingredientsf=dialog.findViewById(R.id.editText_recipe_ingredients_filter);
         AutoCompleteTextView countryf=dialog.findViewById(R.id.autoCompleteTextView_country_filter);
+
+
+
 
         Button apply_filters_button=dialog.findViewById(R.id.button_apply_filters);
 
