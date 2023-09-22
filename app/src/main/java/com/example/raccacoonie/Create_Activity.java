@@ -173,22 +173,16 @@ public class Create_Activity extends AppCompatActivity implements RecyclerViewIn
                     Log.d("CREATOR ID TRANSMITTED TO THE ADAPTER", String.valueOf(creator_id));
                     Recipe user_recipe = new Recipe(creator_id, recipe_title_str, "nullpic", execution_str, ingredients_str, category, dietaryStatus, country_str);
                     //todo: add pictures, for now "nullpic" works fine
-                    Log.d("ID FROM RECIPE", String.valueOf(user_recipe.creator_id));
-                    Log.d("ID FROM RECIPE GETTER", String.valueOf(user_recipe.getCreator_id()));
 
 
                     //backend for recipe input
 
                     int recipe_id = submitRecipe(user_recipe, myHandler);
-                    Log.d("ID FROM RECIPE", String.valueOf(user_recipe.creator_id));
-                    Log.d("ID FROM RECIPE GETTER", String.valueOf(user_recipe.getCreator_id()));
 
                     adapter.ogrecipes.add(user_recipe);
-                    Log.d("CREATOR ID PASSED", String.valueOf(adapter.ogrecipes.get(adapter.ogrecipes.size() - 1).creator_id));
                     adapter.post_id.add(recipe_id);
                     adapter.notifyItemInserted(adapter.getItemCount() - 1);
 
-                    Log.d("POSTS", String.valueOf(id_post));
                     PhotoUploadFragment photoUploadFragment = new PhotoUploadFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.bottom_container, photoUploadFragment);

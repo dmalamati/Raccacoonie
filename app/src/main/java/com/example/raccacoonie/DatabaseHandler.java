@@ -159,8 +159,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public boolean isPostLikedByUser(int post_id, int user_id)
     {
-        Log.d("post",String.valueOf(post_id));
-        Log.d("user",String.valueOf(user_id));
         SQLiteDatabase db = this.getWritableDatabase();
 
         String [] arguments = {String.valueOf(post_id),String.valueOf(user_id)};
@@ -324,6 +322,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     }
+
+    public String getEmailById(int id)
+    {
+        if (id < 0 )
+        {
+            return "Raccacoonie@gmail.com";
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        String [] args = {String.valueOf(id)};
+        Cursor query = db.rawQuery("SELECT email FROM USER WHERE _id = ?",args);
+        if (query.moveToFirst() == false)
+        {
+            return "test@gmail.com";
+        }else
+        {
+            return query.getString(0);
+        }
+
+
+    }
    public Cursor rawQuery(String query)
    {
        SQLiteDatabase db = this.getWritableDatabase();
@@ -357,10 +375,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (query.getCount()> 0 )
         {
-            Log.d("CHECK","POST ALREADY SAVED");
             return true;
         }
-        Log.d("CHECK","POST NOT SAVED");
         return false;
     }
 

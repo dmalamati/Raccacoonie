@@ -370,6 +370,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     {
 
                         data.putInt("Recipe_pic",((RecyclerAdapter) adapter).recipeDrawables[((RecyclerAdapter) adapter).post_id.get(position)+9]);
+                        Log.d("Debug","GOT FROM ARRAY");
 
                     }else
                     {
@@ -445,13 +446,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.itemTitle.setText(ogrecipes.get(position).title);
-        /*if (position < recipeDrawables.length)
-        {
-            holder.itemImage.setImageResource(drawables_list.get(position));
-        }else
-        {
-            holder.itemImage.setImageResource(R.drawable.recipe_image);
-        }*/
         Bitmap bitmap = Create_Activity.loadBitmapFromInternalStorage(this.context,String.valueOf(post_id.get(position)));
         if (bitmap!=null)
         {

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -47,14 +48,14 @@ public class View_Profile_Activity extends AppCompatActivity implements Recycler
 
         //changing the adapter
 
-        my_adapter.ogrecipes.remove(0);
-        my_adapter.likes.remove(0);
-        my_adapter.dislikes.remove(0);
+
         my_adapter.notifyDataSetChanged();
 
 
         //UI
         TextView username_text = findViewById(R.id.textView_View_Username);
+
+
 
 
         //set UI

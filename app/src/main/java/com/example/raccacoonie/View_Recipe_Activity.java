@@ -82,6 +82,11 @@ public class View_Recipe_Activity extends AppCompatActivity {
 
         Bundle data = intent.getExtras();
         int post_id = data.getInt("rec_id");
+        Log.d("id given to recipe",String.valueOf(post_id));
+        Log.d("id given to recipe",String.valueOf(post_id));
+
+        Log.d("id given to recipe",String.valueOf(post_id));
+
         //load UI according to recipe
         if(data != null)
         {

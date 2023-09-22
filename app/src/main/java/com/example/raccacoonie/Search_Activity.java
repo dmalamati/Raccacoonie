@@ -53,6 +53,13 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
 
+        //ADAPTER CARD BACKUPS FOR FILTERING
+        ArrayList<Recipe> backup_rec = new ArrayList<>(adapter.ogrecipes);
+        ArrayList<Integer> backup_post_id = new ArrayList<>(adapter.post_id);
+        ArrayList<Integer> backup_drawbles = new ArrayList<>(adapter.drawables_list);
+
+        //UI
+
         ImageButton log_out_button= findViewById(R.id.log_out_button);
         log_out_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +73,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         filters_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFilterDialog();
+                showFilterDialog(backup_rec,backup_post_id,backup_drawbles);
             }
         });
 
@@ -115,8 +122,11 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
             }
         });
     }
+    /*ArrayList<Recipe> backup_rec = new ArrayList<>(adapter.ogrecipes);
+        ArrayList<Integer> backup_post_id = new ArrayList<>(adapter.post_id);
+        ArrayList<Integer> backup_drawbles = new ArrayList<>(adapter.drawables_list);*/
 
-    private void showFilterDialog() {
+    public void showFilterDialog(ArrayList<Recipe> backup_rec,ArrayList<Integer> backup_post_id,ArrayList<Integer> backup_drawbles) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottom_sheet_layout);
@@ -127,6 +137,8 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         AutoCompleteTextView countryf=dialog.findViewById(R.id.autoCompleteTextView_country_filter);
 
         Button apply_filters_button=dialog.findViewById(R.id.button_apply_filters);
+
+
         apply_filters_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,18 +151,23 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 
 
                 dialog.dismiss();
-                adapter.updateRecipes(category,tag,ingredients,country);
+                //adapter.updateRecipes(category,tag,ingredients,country);
 
 
                 //Filtering
                 //adapter.post_id.remove(i);
                 //                adapter.drawables_list.remove(i);
 
-                ArrayList<Recipe> backup_rec = new ArrayList<>(adapter.ogrecipes);
-                ArrayList<Integer> backup_post_id = new ArrayList<>(adapter.post_id);
-                ArrayList<Integer> backup_drawbles = new ArrayList<>(adapter.drawables_list);
+
                 Map<String,Integer> types=new HashMap<>();
                 adapter.ogrecipes.clear();
+                adapter.post_id.clear();
+                adapter.drawables_list.clear();
+
+                for (int r = 0 ; r< backup_rec.size();r++)
+                {
+                    backup_rec.get(r).setCreator_id(backup_post_id.get(r));
+                }
 
                 types.put("Pescetarian",1);
                 types.put("Vegetarian",2);
@@ -178,7 +195,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
                             else {
                                 if (recipe.country.equals((country))){
                                     adapter.ogrecipes.add(recipe);
-                                    adapter.post_id.add(backup_post_id.get(pos));
+                                    adapter.post_id.add(recipe.creator_id);
                                     adapter.drawables_list.add(backup_drawbles.get(pos));
                                 }
                             }
@@ -186,10 +203,14 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
                             if (country.equals("")) {
                                 if (types.get(tag) == recipe.dietaryStatus) {
                                     adapter.ogrecipes.add(recipe);
+                                    adapter.post_id.add(recipe.creator_id);
+                                    adapter.drawables_list.add(backup_drawbles.get(pos));
                                 }
                             } else {
                                 if (types.get(tag) == recipe.dietaryStatus && recipe.country.equals(country)) {
                                     adapter.ogrecipes.add(recipe);
+                                    adapter.post_id.add(recipe.creator_id);
+                                    adapter.drawables_list.add(backup_drawbles.get(pos));
                                 }
                             }
                         }
@@ -198,21 +219,31 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
                         if (tag.equals("Tag")) {
                             if (country.equals("")) {
                                 if (recipe.category.equals(category)) {
+                                    Log.d("search","GOT HERE AND ADDING A RECIPE");
                                     adapter.ogrecipes.add(recipe);
+                                    adapter.post_id.add(recipe.creator_id);
+                                    adapter.drawables_list.add(backup_drawbles.get(pos));
+                                    Log.d("id",String.valueOf(recipe.creator_id));
                                 }
                             } else {
                                 if (recipe.country.equals((country)) && recipe.category.equals(category)) {
                                     adapter.ogrecipes.add(recipe);
+                                    adapter.post_id.add(recipe.creator_id);
+                                    adapter.drawables_list.add(backup_drawbles.get(pos));
                                 }
                             }
                         } else {
                             if (country.equals("")) {
                                 if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category)) {
                                     adapter.ogrecipes.add(recipe);
+                                    adapter.post_id.add(recipe.creator_id);
+                                    adapter.drawables_list.add(backup_drawbles.get(pos));
                                 }
                             } else {
                                 if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category) && recipe.country.equals(country)) {
                                     adapter.ogrecipes.add(recipe);
+                                    adapter.post_id.add(recipe.creator_id);
+                                    adapter.drawables_list.add(backup_drawbles.get(pos));
                                 }
                             }
                         }
@@ -236,19 +267,24 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
                         }
                         if (similarity==0)
                         {
-                            adapter.ogrecipes.remove(recipe);
+                            //adapter.ogrecipes.remove(recipe);
+
                         }
                         else
                         {
                             adapter.ogrecipes.add(recipe);
+                            adapter.post_id.add(recipe.creator_id);
+                            adapter.drawables_list.add(backup_drawbles.get(pos));
                         }
-                        pos++;
-                    }}
+
+                    }
+                    pos++;}
 
 
 
 
                 adapter.notifyDataSetChanged();
+
 
                 //END FILTERING
             }

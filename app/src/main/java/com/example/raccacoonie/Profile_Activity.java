@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +45,19 @@ public class Profile_Activity extends AppCompatActivity implements RecyclerViewI
         recyclerView.setAdapter(my_adapter);
         SharedPreferences sharedPreferences=this.getSharedPreferences("MyPrefs",0);
         Integer userid = sharedPreferences.getInt("id",-1);
+
+//UI
+
+        EditText user = findViewById(R.id.editText_username_edit);
+        EditText email = findViewById(R.id.editText_email_edit);
+        Log.d("Iser id",String.valueOf(userid));
+
+        user.setText(my_handler.getUsernameById(userid));
+        Cursor query = my_handler.rawQuery("SELECT * FROM USER WHERE _id ="+String.valueOf(userid));
+        if (query.getCount()==1)
+        {
+            email.setText(my_handler.getEmailById(userid));
+        }
 
 
         //GET CREATED RECIPES ONLY
