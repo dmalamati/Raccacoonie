@@ -155,8 +155,6 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         Spinner categoryf=dialog.findViewById(R.id.spinner_category_filter);
         Spinner tagf=dialog.findViewById(R.id.spinner_tag_filter);
         EditText ingredientsf=dialog.findViewById(R.id.editText_recipe_ingredients_filter);
-        AutoCompleteTextView countryf=dialog.findViewById(R.id.autoCompleteTextView_country_filter);
-
 
 
 
@@ -169,9 +167,6 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
                 String category=categoryf.getSelectedItem().toString();
                 String tag=tagf.getSelectedItem().toString();
                 String ingredients=ingredientsf.getText().toString();
-                String country=countryf.getText().toString();
-                Toast.makeText(Search_Activity.this,"Filters Applied"+country,Toast.LENGTH_SHORT).show();
-
 
 
                 dialog.dismiss();
@@ -214,61 +209,29 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 
                     if (category.equals("Category")) {
                         if (tag.equals("Tag")) {
-                            if (country.equals(""))
-                                Log.d("debug","null");
-                            else {
-                                if (recipe.country.equals((country))){
-                                    adapter.ogrecipes.add(recipe);
-                                    adapter.post_id.add(recipe.creator_id);
-                                    adapter.drawables_list.add(backup_drawbles.get(pos));
-                                }
-                            }
+                            Log.d("debug","null");
                         } else {
-                            if (country.equals("")) {
-                                if (types.get(tag) == recipe.dietaryStatus) {
-                                    adapter.ogrecipes.add(recipe);
-                                    adapter.post_id.add(recipe.creator_id);
-                                    adapter.drawables_list.add(backup_drawbles.get(pos));
-                                }
-                            } else {
-                                if (types.get(tag) == recipe.dietaryStatus && recipe.country.equals(country)) {
-                                    adapter.ogrecipes.add(recipe);
-                                    adapter.post_id.add(recipe.creator_id);
-                                    adapter.drawables_list.add(backup_drawbles.get(pos));
-                                }
+                            if (types.get(tag) == recipe.dietaryStatus) {
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
                             }
                         }
 
                     } else {
                         if (tag.equals("Tag")) {
-                            if (country.equals("")) {
-                                if (recipe.category.equals(category)) {
-                                    Log.d("search","GOT HERE AND ADDING A RECIPE");
-                                    adapter.ogrecipes.add(recipe);
-                                    adapter.post_id.add(recipe.creator_id);
-                                    adapter.drawables_list.add(backup_drawbles.get(pos));
-                                    Log.d("id",String.valueOf(recipe.creator_id));
-                                }
-                            } else {
-                                if (recipe.country.equals((country)) && recipe.category.equals(category)) {
-                                    adapter.ogrecipes.add(recipe);
-                                    adapter.post_id.add(recipe.creator_id);
-                                    adapter.drawables_list.add(backup_drawbles.get(pos));
-                                }
+                            if (recipe.category.equals(category)) {
+                                Log.d("search","GOT HERE AND ADDING A RECIPE");
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
+                                Log.d("id",String.valueOf(recipe.creator_id));
                             }
                         } else {
-                            if (country.equals("")) {
-                                if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category)) {
-                                    adapter.ogrecipes.add(recipe);
-                                    adapter.post_id.add(recipe.creator_id);
-                                    adapter.drawables_list.add(backup_drawbles.get(pos));
-                                }
-                            } else {
-                                if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category) && recipe.country.equals(country)) {
-                                    adapter.ogrecipes.add(recipe);
-                                    adapter.post_id.add(recipe.creator_id);
-                                    adapter.drawables_list.add(backup_drawbles.get(pos));
-                                }
+                            if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category)) {
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
                             }
                         }
                     }
@@ -305,23 +268,13 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
                     pos++;}
 
 
-
-
                 adapter.notifyDataSetChanged();
 
 
                 //END FILTERING
             }
         });
-        Button clearbtn=dialog.findViewById(R.id.button_clear_filters);
-        clearbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.clearFilters();
 
-                Toast.makeText(Search_Activity.this, "Filters Cleared", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

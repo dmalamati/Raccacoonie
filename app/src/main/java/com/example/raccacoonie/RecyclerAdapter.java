@@ -120,32 +120,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 "chocolate_chip_cookies.jpg",
                 "1. Preheat the oven to 350°F. \n2. In a mixing bowl, cream together butter and sugars. \n3. Beat in eggs and vanilla. \n4. In a separate bowl, combine flour, baking soda, and salt. \n5. Gradually add the dry ingredients to the wet ingredients, mixing well. \n6. Stir in chocolate chips. \n7. Drop rounded tablespoons of dough onto a baking sheet. \n8. Bake for 10-12 minutes or until golden brown. \n9. Allow cookies to cool on the baking sheet for a few minutes before transferring to a wire rack.",
                 "Butter, granulated sugar, brown sugar, eggs, vanilla extract, all-purpose flour, baking soda, salt, chocolate chips",
-                "Snack", 3, "United States"));
+                "Snack", 2, "United States"));
         ogrecipes.add(new Recipe(-10, "Chicken Parmesan",
                 "chicken_parmesan.jpg",
                 "1. Preheat the oven to 375°F. \n2. Season chicken cutlets with salt, pepper, and Italian seasoning. \n3. Dip each cutlet in beaten egg, then coat with breadcrumbs. \n4. Heat oil in a skillet and cook the cutlets until golden brown. \n5. Place cooked cutlets in a baking dish and top with marinara sauce and shredded mozzarella cheese. \n6. Bake for 15-20 minutes or until the cheese is melted and bubbly. \n7. Serve with cooked spaghetti or your choice of pasta.",
                 "Chicken cutlets, salt, pepper, Italian seasoning, eggs, breadcrumbs, oil, marinara sauce, shredded mozzarella cheese, spaghetti",
-                "Dinner", 3, "Italy"));
-        ogrecipes.add(new Recipe(-10, "Caprese Salad",
+                "Dinner", 0, "Italy"));
+        ogrecipes.add(new Recipe(-10, "Caprese Salad with Tuna",
                 "caprese_salad.jpg",
-                "1. Slice tomatoes and fresh mozzarella cheese. \n2. Arrange the tomato and mozzarella slices on a serving platter. \n3. Drizzle with olive oil and balsamic glaze. \n4. Sprinkle with salt, pepper, and fresh basil leaves. \n5. Serve immediately as a refreshing appetizer or side dish.",
-                "Tomatoes, fresh mozzarella cheese, olive oil, balsamic glaze, salt, pepper, fresh basil leaves",
-                "Snack", 2, "Greece"));
+                "1. Slice tomatoes and fresh mozzarella cheese. \n2. Arrange the tomato and mozzarella slices on a serving platter. \n3. Open the tuna and distribute it evenly on the salad \n4. Drizzle with olive oil and balsamic glaze. \n5. Sprinkle with salt, pepper, and fresh basil leaves. \n5. Serve immediately as a refreshing appetizer or side dish.",
+                "Tomatoes, fresh mozzarella cheese, canned tuna, olive oil, balsamic glaze, salt, pepper, fresh basil leaves",
+                "Snack", 1, "Greece"));
         ogrecipes.add(new Recipe(-10, "Vegetable Stir-Fry",
                 "vegetable_stirfry.jpg",
                 "1. Heat oil in a wok or skillet over high heat. \n2. Add sliced vegetables (e.g., bell peppers, carrots, broccoli, snap peas). \n3. Stir-fry for a few minutes until vegetables are crisp-tender. \n4. In a small bowl, mix together soy sauce, ginger, and garlic. \n5. Pour the sauce over the vegetables and stir-fry for another minute. \n6. Serve hot over steamed rice or noodles.",
                 "Assorted vegetables (bell peppers, carrots, broccoli, snap peas), oil, soy sauce, ginger, garlic, steamed rice or noodles",
-                "Dinner", 1, "China"));
+                "Dinner", 3, "China"));
         ogrecipes.add(new Recipe(-10, "Avocado Toast",
                 "avocado_toast.jpg",
                 "1. Toast a slice of bread until golden brown. \n2. Mash half an avocado and spread it on the toast. \n3. Sprinkle with salt, pepper, and red pepper flakes to taste. \n4. Optionally, top with sliced tomatoes, a drizzle of olive oil, or a squeeze of lemon juice. \n5. Enjoy as a quick and healthy breakfast or snack.",
                 "Bread, avocado, salt, pepper, red pepper flakes",
-                "Snack", 1, "United States"));
+                "Snack", 3, "United States"));
         ogrecipes.add(new Recipe(3, "Peanut Butter Banana Smoothie",
                 "peanut_butter_smoothie.jpg",
                 "1. In a blender, combine a ripe banana, a spoonful of peanut butter, and a cup of milk. \n2. Add a drizzle of honey and a pinch of cinnamon. \n3. Blend until smooth and creamy. \n4. Pour into a glass and enjoy as a delicious and energizing smoothie.",
                 "Banana, peanut butter, milk, honey, cinnamon",
-                "Drink", 1, "Greece"));
+                "Drink", 2, "Greece"));
 
         preloaded = ogrecipes.size();
         int k = 1;

@@ -472,7 +472,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor = db.rawQuery("SELECT _id FROM RECIPE ORDER BY _id DESC LIMIT 1",null);
         if (cursor.getCount() < 1 )
         {
-            Log.d("GAMO","TIN PANAGIA");
             return -1;
         }
         cursor.moveToFirst();

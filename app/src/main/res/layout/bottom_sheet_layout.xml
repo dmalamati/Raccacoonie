@@ -69,23 +69,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinner_category_filter" />
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView_country_filter"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/round_corner_green"
-                android:elevation="10dp"
-                android:fontFamily="@font/tienne"
-                android:hint="@string/country"
-                android:paddingHorizontal="20dp"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_tag_filter" />
-
             <EditText
                 android:id="@+id/editText_recipe_ingredients_filter"
                 android:layout_width="0dp"
@@ -104,7 +87,7 @@
                 android:paddingVertical="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView_country_filter" />
+                app:layout_constraintTop_toBottomOf="@+id/spinner_tag_filter" />
 
             <EditText
                 android:id="@+id/editText_recipe_creator_filter"
@@ -128,9 +111,9 @@
                 android:id="@+id/button_apply_filters"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="80dp"
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/blue_button_states"
                 android:elevation="20dp"
@@ -140,30 +123,10 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_clear_filters"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editText_recipe_creator_filter" />
 
-            <Button
-                android:id="@+id/button_clear_filters"
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/blue_button_states"
-                android:fontFamily="@font/tienne"
-                android:text="@string/clear_all"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/button_apply_filters"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button_apply_filters"
-                app:layout_constraintTop_toTopOf="@+id/button_apply_filters" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
