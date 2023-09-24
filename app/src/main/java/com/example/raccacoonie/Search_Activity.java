@@ -56,32 +56,58 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         adapter = new RecyclerAdapter(this,this);
         recyclerView.setAdapter(adapter);
 
-        SearchView search = findViewById(R.id.search_view);
-        search.setEnabled(true);
-        search.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Search_Activity.this, "Search is unavailable. Try our filter dialog instead", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                Toast.makeText(Search_Activity.this, "Search is unavailable. Try our filter dialog instead", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-
         //ADAPTER CARD BACKUPS FOR FILTERING
         ArrayList<Recipe> backup_rec = new ArrayList<>(adapter.ogrecipes);
         ArrayList<Integer> backup_post_id = new ArrayList<>(adapter.post_id);
         ArrayList<Integer> backup_drawbles = new ArrayList<>(adapter.drawables_list);
+
+        SearchView search = findViewById(R.id.search_view);
+        search.setEnabled(true);
+        search.clearFocus();
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                boolean found_recipe = false;
+
+                Map<String,Integer> types=new HashMap<>();
+                adapter.ogrecipes.clear();
+                adapter.post_id.clear();
+                adapter.drawables_list.clear();
+
+                for (int r = 0 ; r< backup_rec.size();r++)
+                {
+                    backup_rec.get(r).setCreator_id(backup_post_id.get(r));
+                }
+
+                int pos = 0;
+
+                String regexPattern = "(?i).*" + Pattern.quote(newText) + ".*";
+                for (Recipe recipe : backup_rec) {
+                    if (recipe.title.matches(regexPattern)) {
+                        adapter.ogrecipes.add(recipe);
+                        adapter.post_id.add(recipe.creator_id);
+                        adapter.drawables_list.add(backup_drawbles.get(pos));
+                        found_recipe = true;
+                    }
+                    pos++;}
+
+                adapter.notifyDataSetChanged();
+
+                if(!found_recipe){
+                    Toast.makeText(getApplicationContext(),"No matches found",Toast.LENGTH_SHORT).show();
+                }
+
+                return true;
+            }
+        });
+
 
         //UI
 
