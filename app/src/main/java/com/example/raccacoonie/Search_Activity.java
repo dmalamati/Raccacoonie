@@ -29,7 +29,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Search_Activity extends AppCompatActivity implements RecyclerViewInterface{
 
@@ -156,6 +160,7 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
         Spinner tagf=dialog.findViewById(R.id.spinner_tag_filter);
         EditText ingredientsf=dialog.findViewById(R.id.editText_recipe_ingredients_filter);
 
+        EditText creatorf = dialog.findViewById(R.id.editText_recipe_creator_filter);
 
 
         Button apply_filters_button=dialog.findViewById(R.id.button_apply_filters);
@@ -168,15 +173,12 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
                 String tag=tagf.getSelectedItem().toString();
                 String ingredients=ingredientsf.getText().toString();
 
+                String creator = creatorf.getText().toString();
 
                 dialog.dismiss();
-                //adapter.updateRecipes(category,tag,ingredients,country);
-
 
                 //Filtering
-                //adapter.post_id.remove(i);
-                //                adapter.drawables_list.remove(i);
-
+                boolean found_recipe = false;
 
                 Map<String,Integer> types=new HashMap<>();
                 adapter.ogrecipes.clear();
@@ -202,74 +204,221 @@ public class Search_Activity extends AppCompatActivity implements RecyclerViewIn
 
                 for (Recipe recipe : backup_rec) {
 
+                    if(category.equals("Category") && tag.equals("Tag") && creator.length()==0 && ingredients.length()==0){
+                        adapter.ogrecipes.add(recipe);
+                        adapter.post_id.add(recipe.creator_id);
+                        adapter.drawables_list.add(backup_drawbles.get(pos));
+                        found_recipe = true;
+                    } else if (recipe.category.equals(category) && tag.equals("Tag") && creator.length()==0 && ingredients.length()==0) {
+                        adapter.ogrecipes.add(recipe);
+                        adapter.post_id.add(recipe.creator_id);
+                        adapter.drawables_list.add(backup_drawbles.get(pos));
+                        found_recipe = true;
+                    } else if (category.equals("Category") && types.get(tag)==recipe.dietaryStatus && creator.length()==0 && ingredients.length()==0) {
+                        adapter.ogrecipes.add(recipe);
+                        adapter.post_id.add(recipe.creator_id);
+                        adapter.drawables_list.add(backup_drawbles.get(pos));
+                        found_recipe = true;
+                    } else if (category.equals("Category") && tag.equals("Tag") && creator.length()>0 && ingredients.length()==0) {
+                        //recipe.creator_id
+                        adapter.ogrecipes.add(recipe);
+                        adapter.post_id.add(recipe.creator_id);
+                        adapter.drawables_list.add(backup_drawbles.get(pos));
+                        found_recipe = true;
+                    } else if (category.equals("Category") && tag.equals("Tag") && creator.length()==0 && ingredients.length()>0) {
+                        StringBuilder regexPattern = new StringBuilder();
+                        String[] recipe_ingredients = ingredients.split(",");
+                        List<String> lst_ingredients = new ArrayList<>();
 
-               /*if ( (category.equals(recipe.category) || types.get(tag)==recipe.dietaryStatus)|| similarity>=2||country.equals(recipe.country)) {
-                    recipes.add(recipe);
-                }*/
-
-                    if (category.equals("Category")) {
-                        if (tag.equals("Tag")) {
-                            Log.d("debug","null");
-                        } else {
-                            if (types.get(tag) == recipe.dietaryStatus) {
-                                adapter.ogrecipes.add(recipe);
-                                adapter.post_id.add(recipe.creator_id);
-                                adapter.drawables_list.add(backup_drawbles.get(pos));
-                            }
+                        for (String ingredient : recipe_ingredients) {
+                            String trimmedIngredient = ingredient.trim().toLowerCase();
+                            lst_ingredients.add(trimmedIngredient);
                         }
 
-                    } else {
-                        if (tag.equals("Tag")) {
-                            if (recipe.category.equals(category)) {
-                                Log.d("search","GOT HERE AND ADDING A RECIPE");
-                                adapter.ogrecipes.add(recipe);
-                                adapter.post_id.add(recipe.creator_id);
-                                adapter.drawables_list.add(backup_drawbles.get(pos));
-                                Log.d("id",String.valueOf(recipe.creator_id));
-                            }
-                        } else {
-                            if (types.get(tag) == recipe.dietaryStatus && recipe.category.equals(category)) {
-                                adapter.ogrecipes.add(recipe);
-                                adapter.post_id.add(recipe.creator_id);
-                                adapter.drawables_list.add(backup_drawbles.get(pos));
-                            }
+                        for (String ingredient : lst_ingredients) {
+                            regexPattern.append("(?=.*").append(Pattern.quote(ingredient)).append(")");
                         }
-                    }
+                        Pattern pattern = Pattern.compile(regexPattern.toString(), Pattern.CASE_INSENSITIVE);
+                        Matcher matcher = pattern.matcher(recipe.ingredients);
 
-
-                    if (ingredients.length()>0)
-                    {
-
-
-                        int similarity = 0;
-                        String[] recipe_ingredients = recipe.ingredients.split(",");
-                        for (int i = 0; i < recipe_ingredients.length; i++) {
-                            recipe_ingredients[i] = recipe_ingredients[i].trim();
-                        }
-
-                        for (String word : filter_ingredients) {
-                            if (Arrays.asList(recipe_ingredients).contains(word)) {
-                                similarity++;
-                            }
-                        }
-                        if (similarity==0)
-                        {
-                            //adapter.ogrecipes.remove(recipe);
-
-                        }
-                        else
-                        {
+                        if (matcher.find()) {
                             adapter.ogrecipes.add(recipe);
                             adapter.post_id.add(recipe.creator_id);
                             adapter.drawables_list.add(backup_drawbles.get(pos));
+                            found_recipe = true;
                         }
+                    } else if (recipe.category.equals(category)) {
+                        if (types.get(tag) == recipe.dietaryStatus && creator.length() == 0 && ingredients.length() == 0) {
+                            adapter.ogrecipes.add(recipe);
+                            adapter.post_id.add(recipe.creator_id);
+                            adapter.drawables_list.add(backup_drawbles.get(pos));
+                            found_recipe = true;
+                        } else if (tag.equals("Tag") && creator.length() > 0 && ingredients.length() == 0) {
+                            // need to check the name of creator
+                            adapter.ogrecipes.add(recipe);
+                            adapter.post_id.add(recipe.creator_id);
+                            adapter.drawables_list.add(backup_drawbles.get(pos));
+                            found_recipe = true;
+                        } else if (tag.equals("Tag") && creator.length() == 0 && ingredients.length() > 0) {
+                            StringBuilder regexPattern = new StringBuilder();
+                            String[] recipe_ingredients = ingredients.split(",");
+                            List<String> lst_ingredients = new ArrayList<>();
 
+                            for (String ingredient : recipe_ingredients) {
+                                String trimmedIngredient = ingredient.trim().toLowerCase();
+                                lst_ingredients.add(trimmedIngredient);
+                            }
+
+                            for (String ingredient : lst_ingredients) {
+                                regexPattern.append("(?=.*").append(Pattern.quote(ingredient)).append(")");
+                            }
+                            Pattern pattern = Pattern.compile(regexPattern.toString(), Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = pattern.matcher(recipe.ingredients);
+
+                            if (matcher.find()) {
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
+                                found_recipe = true;
+                            }
+                        } else if (types.get(tag) == recipe.dietaryStatus && creator.length() > 0 && ingredients.length() == 0) {
+                            // check for creator name
+                            adapter.ogrecipes.add(recipe);
+                            adapter.post_id.add(recipe.creator_id);
+                            adapter.drawables_list.add(backup_drawbles.get(pos));
+                            found_recipe = true;
+                        } else if (types.get(tag) == recipe.dietaryStatus && creator.length() == 0 && ingredients.length() > 0) {
+                            StringBuilder regexPattern = new StringBuilder();
+                            String[] recipe_ingredients = ingredients.split(",");
+                            List<String> lst_ingredients = new ArrayList<>();
+
+                            for (String ingredient : recipe_ingredients) {
+                                String trimmedIngredient = ingredient.trim().toLowerCase();
+                                lst_ingredients.add(trimmedIngredient);
+                            }
+
+                            for (String ingredient : lst_ingredients) {
+                                regexPattern.append("(?=.*").append(Pattern.quote(ingredient)).append(")");
+                            }
+                            Pattern pattern = Pattern.compile(regexPattern.toString(), Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = pattern.matcher(recipe.ingredients);
+
+                            if (matcher.find()) {
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
+                                found_recipe = true;
+                            }
+                        } else if (tag.equals("Tag") && creator.length() > 0 && ingredients.length() > 0) {
+                            // check of creator name then ingredients
+                            StringBuilder regexPattern = new StringBuilder();
+                            String[] recipe_ingredients = ingredients.split(",");
+                            List<String> lst_ingredients = new ArrayList<>();
+
+                            for (String ingredient : recipe_ingredients) {
+                                String trimmedIngredient = ingredient.trim().toLowerCase();
+                                lst_ingredients.add(trimmedIngredient);
+                            }
+
+                            for (String ingredient : lst_ingredients) {
+                                regexPattern.append("(?=.*").append(Pattern.quote(ingredient)).append(")");
+                            }
+                            Pattern pattern = Pattern.compile(regexPattern.toString(), Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = pattern.matcher(recipe.ingredients);
+
+                            if (matcher.find()) {
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
+                                found_recipe = true;
+                            }
+                        }
+                    } else if (types.get(tag) == recipe.dietaryStatus && category.equals("Category")) {
+                        if (creator.length() > 0 && ingredients.length() == 0){
+                            //check for creator name
+                            adapter.ogrecipes.add(recipe);
+                            adapter.post_id.add(recipe.creator_id);
+                            adapter.drawables_list.add(backup_drawbles.get(pos));
+                            found_recipe = true;
+                        } else if (creator.length() == 0 && ingredients.length() > 0) {
+                            StringBuilder regexPattern = new StringBuilder();
+                            String[] recipe_ingredients = ingredients.split(",");
+                            List<String> lst_ingredients = new ArrayList<>();
+
+                            for (String ingredient : recipe_ingredients) {
+                                String trimmedIngredient = ingredient.trim().toLowerCase();
+                                lst_ingredients.add(trimmedIngredient);
+                            }
+
+                            for (String ingredient : lst_ingredients) {
+                                regexPattern.append("(?=.*").append(Pattern.quote(ingredient)).append(")");
+                            }
+                            Pattern pattern = Pattern.compile(regexPattern.toString(), Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = pattern.matcher(recipe.ingredients);
+
+                            if (matcher.find()) {
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
+                                found_recipe = true;
+                            }
+                        } else if (creator.length() > 0 && ingredients.length() > 0) {
+                            //check for creator name
+                            StringBuilder regexPattern = new StringBuilder();
+                            String[] recipe_ingredients = ingredients.split(",");
+                            List<String> lst_ingredients = new ArrayList<>();
+
+                            for (String ingredient : recipe_ingredients) {
+                                String trimmedIngredient = ingredient.trim().toLowerCase();
+                                lst_ingredients.add(trimmedIngredient);
+                            }
+
+                            for (String ingredient : lst_ingredients) {
+                                regexPattern.append("(?=.*").append(Pattern.quote(ingredient)).append(")");
+                            }
+                            Pattern pattern = Pattern.compile(regexPattern.toString(), Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = pattern.matcher(recipe.ingredients);
+
+                            if (matcher.find()) {
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
+                                found_recipe = true;
+                            }
+                        }
+                    } else if (ingredients.length() > 0) {
+                        if (creator.length() > 0){
+                            // check for creator name
+                            StringBuilder regexPattern = new StringBuilder();
+                            String[] recipe_ingredients = ingredients.split(",");
+                            List<String> lst_ingredients = new ArrayList<>();
+
+                            for (String ingredient : recipe_ingredients) {
+                                String trimmedIngredient = ingredient.trim().toLowerCase();
+                                lst_ingredients.add(trimmedIngredient);
+                            }
+
+                            for (String ingredient : lst_ingredients) {
+                                regexPattern.append("(?=.*").append(Pattern.quote(ingredient)).append(")");
+                            }
+                            Pattern pattern = Pattern.compile(regexPattern.toString(), Pattern.CASE_INSENSITIVE);
+                            Matcher matcher = pattern.matcher(recipe.ingredients);
+
+                            if (matcher.find()) {
+                                adapter.ogrecipes.add(recipe);
+                                adapter.post_id.add(recipe.creator_id);
+                                adapter.drawables_list.add(backup_drawbles.get(pos));
+                                found_recipe = true;
+                            }
+                        }
                     }
                     pos++;}
 
-
                 adapter.notifyDataSetChanged();
 
+                if(!found_recipe){
+                    Toast.makeText(getApplicationContext(),"No matches found",Toast.LENGTH_SHORT).show();
+                }
 
                 //END FILTERING
             }
