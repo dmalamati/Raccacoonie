@@ -96,11 +96,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public boolean  checkPassword(String user,String pass)
     {
-        if (user.equals("") && pass.equals("") )
-        {
-            return true;
-            //TODO: DELETE IN FINAL BUILD
-        }
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         String[] args = {user,pass};
@@ -260,7 +256,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return user;
     }
-    //todo: build this
+
     public boolean userExists(int id)
     {
         return true;
