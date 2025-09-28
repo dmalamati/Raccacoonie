@@ -1,3 +1,13 @@
+<div align="center">
+  <a href="https://github.com/dmalamati/Raccacoonie">
+    <img src="" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">UniChatbot</h3>
+</div>
+
+
+
 # Raccacoonie
 
 Raccacoonie is a mobile application developed using **Android Studio** with **Java** and **Gradle**, featuring a user interface designed in **Figma**.  
