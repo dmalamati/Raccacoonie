@@ -6,10 +6,6 @@
   <h1 align="center">Raccacoonie</h1>
 </div>
 
-
-
-# Raccacoonie
-
 Raccacoonie is a mobile application developed using **Android Studio** with **Java** and **Gradle**, featuring a user interface designed in **Figma**.  
 The project follows a standard Android project structure, with the main application logic and resources located inside the `app` module.  
 It can be built and run directly through Android Studio or using the included Gradle Wrapper.
