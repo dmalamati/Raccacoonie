@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/dmalamati/Raccacoonie">
-    <img src="" alt="Logo" width="80" height="80">
+    <img src="app/src/main/res/drawable/logo_circle_icon.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">UniChatbot</h3>
