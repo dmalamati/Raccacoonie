@@ -18,7 +18,11 @@ Through smart filtering and an intuitive design, it makes cooking both sustainab
 
 ### 🍴 Key Functionalities
 - **Share & Save Recipes** – upload your own recipes or keep track of your favorites
-  <img src="Screenshots/1000006145.jpg"  width="200">
+  <p align="center">
+    <img src="Screenshots/1000006145.jpg" width="200" alt="Screenshot">
+    <img src="Screenshots/1000006148.jpg" width="200" alt="Screenshot">
+    <img src="Screenshots/1000006149.jpg" width="200" alt="Screenshot">
+  </p>
 - **Recipe Search** – browse recipes with multiple filters (cuisine, category, etc.)  
 - **Ingredient-Based Search** – discover dishes based on the ingredients you already have at home  
 - **Profile Creation** – build your personal profile to manage saved recipes and preferences  
