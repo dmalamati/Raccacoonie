@@ -23,7 +23,17 @@ Through smart filtering and an intuitive design, it makes cooking both sustainab
     <img src="Screenshots/1000006148.jpg" width="200" alt="Screenshot">
     <img src="Screenshots/1000006149.jpg" width="200" alt="Screenshot">
   </p>
-- **Recipe Search** – browse recipes with multiple filters (cuisine, category, etc.)  
-- **Ingredient-Based Search** – discover dishes based on the ingredients you already have at home  
-- **Profile Creation** – build your personal profile to manage saved recipes and preferences  
-- **Food Waste Reduction Filters** – prioritize recipes that help you use up available ingredients efficiently  
+- **Recipe Search** – browse recipes with multiple filters (cuisine, category, etc.)
+  <p align="center">
+    <img src="Screenshots/1000006143.jpg" width="200" alt="Screenshot">
+  </p>
+- **Ingredient-Based Search** – discover dishes based on the ingredients you already have at home
+  <p align="center">
+    <img src="Screenshots/1000006144.jpg" width="200" alt="Screenshot">
+  </p>
+- **Profile Creation** – build your personal profile to manage saved recipes and preferences
+  <p align="center">
+    <img src="Screenshots/1000006140.jpg" width="200" alt="Screenshot">
+    <img src="Screenshots/1000006141.jpg" width="200" alt="Screenshot">
+  </p>
+
