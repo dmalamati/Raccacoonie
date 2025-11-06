@@ -17,7 +17,8 @@ The app encourages users to share, save, and explore recipes while promoting the
 Through smart filtering and an intuitive design, it makes cooking both sustainable and enjoyable.
 
 ### 🍴 Key Functionalities
-- **Share & Save Recipes** – upload your own recipes or keep track of your favorites  
+- **Share & Save Recipes** – upload your own recipes or keep track of your favorites
+  <img src="Screenshots/1000006145.jpg">
 - **Recipe Search** – browse recipes with multiple filters (cuisine, category, etc.)  
 - **Ingredient-Based Search** – discover dishes based on the ingredients you already have at home  
 - **Profile Creation** – build your personal profile to manage saved recipes and preferences  
